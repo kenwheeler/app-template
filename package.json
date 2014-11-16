@@ -1,0 +1,34 @@
+{
+  "name": "react-app",
+  "version": "0.0.0",
+  "description": "React App",
+  "main": "app.js",
+  "scripts": {
+    "watch": "watchify app.js -o public/js/bundle.js -v",
+    "browserify": "browserify app.js | uglifyjs > public/js/bundle.js",
+    "build": "npm run browserify ",
+    "start": "npm run watch & nodemon server.js"
+  },
+  "author": "Ken Wheeler",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.10.2",
+    "express-handlebars": "^1.1.0",
+    "mcfly": "0.0.7",
+    "node-jsx": "^0.12.0",
+    "react": "^0.12.0",
+    "react-router": "^0.10.2"
+  },
+  "devDependencies": {
+    "browserify": "^6.3.2",
+    "nodemon": "^1.2.1",
+    "reactify": "^0.16.0",
+    "uglify": "^0.1.0",
+    "watchify": "^2.1.1"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
