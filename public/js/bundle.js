@@ -156,7 +156,9 @@ var React = require('react');
 
 module.exports = React.createClass({displayName: 'exports',
   render: function(){
-    React.createElement("h1", null, "Posts")
+    return (
+      React.createElement("h1", null, "Posts")
+    )
   }
 });
 },{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/flux/McFly.js":[function(require,module,exports){
