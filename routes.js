@@ -1,20 +1,15 @@
-var JSX = require('node-jsx').install(),
-  React = require('react'),
-  Router = require('react-router'),
-  App = require('./components/App.jsx');
+var React = require('react');
+var Router = require('react-router');
+var App = require('./components/App');
+var PostsIndex = require('./components/posts/PostsIndex');
+var Routes = Router.Routes;
+var Route = Router.Route;
+var DefaultRoute = Router.DefaultRoute;
 
-module.exports = {
-
-  route: function(req, res) {
-      markup = 'test';
-      state = {
-        test: 2
-      };
-      // Render our 'home' template
-      res.render('index', {
-        markup: markup, // Pass rendered react markup
-        state: JSON.stringify(state)
-      });
-  }
-
-}
+module.exports = (
+  <Routes location="history">
+    <Route name="app" handler={App}>
+      <Route name="posts" path="/" handler={PostsIndex} />
+    </Route>
+  </Routes>
+);

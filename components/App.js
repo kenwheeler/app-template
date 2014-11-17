@@ -1,7 +1,8 @@
-var React = require('react');
-var Header = require('./common/Header.jsx');
-var Navigation = require('./common/Navigation.jsx');
+var React =  require('react');
+var Header = require('./common/Header');
+var Navigation = require('./common/Navigation');
 var UIStore = require('../stores/UIStore');
+
 
 function getState() {
   return {
@@ -9,7 +10,7 @@ function getState() {
   }
 }
 
-var App = React.createClass({
+module.exports = App = React.createClass({
 
   mixins: [UIStore.mixin],
 
@@ -27,11 +28,10 @@ var App = React.createClass({
       <div className="container">
         <Header />
         <Navigation navigationActive={this.state.navigationActive} />
+        {this.props.activeRouteHandler()}
       </div>
     )
 
   }
 
 });
-
-module.exports = App;

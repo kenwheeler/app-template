@@ -1,5 +1,4 @@
 var React = require('react');
-var MenuButton = require('../elements/MenuButton.jsx');
 
 module.exports = React.createClass({
   handleClick: function(){

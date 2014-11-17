@@ -1,5 +1,5 @@
 var React = require('react');
-var MenuButton = require('../elements/MenuButton.jsx');
+var MenuButton = require('../elements/MenuButton');
 var UIActions = require('../../actions/UIActions');
 
 module.exports = React.createClass({
