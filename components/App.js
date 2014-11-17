@@ -10,7 +10,7 @@ function getState() {
   }
 }
 
-module.exports = App = React.createClass({
+var App = React.createClass({
 
   mixins: [UIStore.mixin],
 
@@ -28,10 +28,14 @@ module.exports = App = React.createClass({
       <div className="container">
         <Header />
         <Navigation navigationActive={this.state.navigationActive} />
+        <section>
         {this.props.activeRouteHandler()}
+        </section>
       </div>
     )
 
   }
 
 });
+
+module.exports = App;

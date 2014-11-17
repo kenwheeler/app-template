@@ -1,7 +1,7 @@
 {
-  "name": "react-app",
-  "version": "0.0.0",
-  "description": "React App",
+  "name": "react-app-template",
+  "version": "0.0.1",
+  "description": "React App Template",
   "main": "app.js",
   "scripts": {
     "watch": "watchify app.js -o public/js/bundle.js -v",
@@ -17,7 +17,7 @@
     "mcfly": "0.0.7",
     "node-jsx": "^0.12.0",
     "react": "^0.12.0",
-    "react-router": "^0.10.2"
+    "react-router": "0.10.1"
   },
   "devDependencies": {
     "browserify": "^6.3.2",

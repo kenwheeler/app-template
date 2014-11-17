@@ -1,4 +1,6 @@
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 var MenuButton = require('../elements/MenuButton');
 var UIActions = require('../../actions/UIActions');
 
@@ -10,12 +12,9 @@ module.exports = React.createClass({
     return (
       <nav>
         <ul className={this.props.navigationActive ? 'active' : ''}>
-          <li><a href="#">Item 1</a></li>
-          <li><a href="#">Item 2</a></li>
-          <li><a href="#">Item 3</a></li>
-          <li><a href="#">Item 4</a></li>
-          <li><a href="#">Item 5</a></li>
-          <li><a href="#">Item 6</a></li>
+          <li><Link to="home" onClick={this.handleClick}>Home</Link></li>
+          <li><Link to="posts" onClick={this.handleClick}>Posts</Link></li>
+          <li><Link to="account" onClick={this.handleClick}>Account</Link></li>
         </ul>
         <MenuButton onClick={this.handleClick} active={this.props.navigationActive} />
       </nav>

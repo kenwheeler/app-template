@@ -1,15 +1,16 @@
 var React = require('react');
 var Router = require('react-router');
-var App = require('./components/App');
-var PostsIndex = require('./components/posts/PostsIndex');
 var Routes = Router.Routes;
 var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
 
-module.exports = (
+var AppRoutes = (
   <Routes location="history">
-    <Route name="app" handler={App}>
-      <Route name="posts" path="/" handler={PostsIndex} />
+    <Route name="app" handler={require('./components/App')}>
+      <Route name="home" path="/" handler={require('./components/home/HomeIndex')} />
+      <Route name="posts" path="/posts" handler={require('./components/posts/PostsIndex')} />
+      <Route name="account" path="/account" handler={require('./components/account/AccountIndex')} />
     </Route>
   </Routes>
 );
+
+module.exports = AppRoutes;

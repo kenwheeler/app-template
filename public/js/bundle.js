@@ -11,19 +11,13 @@ module.exports = UIActions = McFly.createActions({
 })
 },{"../flux/McFly":"/Users/kenwheeler/Projects/app-template/flux/McFly.js"}],"/Users/kenwheeler/Projects/app-template/app.js":[function(require,module,exports){
 var React = require('react');
-var App = require('./components/App');
 var Router = require('./routes');
 
-// Snag the initial state that was passed from the server side
 var initialState = JSON.parse(document.getElementById('initial-state').innerHTML)
 
-// Render the components, picking up where react left off on the server
-React.renderComponent(Router, document.body);
+React.render(Router, document.body);
 
-// Router.run(routes, Router.HistoryLocation, function(Handler){
-//   React.render(<Handler />, document.body);
-// });
-},{"./components/App":"/Users/kenwheeler/Projects/app-template/components/App.js","./routes":"/Users/kenwheeler/Projects/app-template/routes.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/App.js":[function(require,module,exports){
+},{"./routes":"/Users/kenwheeler/Projects/app-template/routes.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/App.js":[function(require,module,exports){
 var React =  require('react');
 var Header = require('./common/Header');
 var Navigation = require('./common/Navigation');
@@ -36,7 +30,7 @@ function getState() {
   }
 }
 
-module.exports = App = React.createClass({displayName: 'App',
+var App = React.createClass({displayName: 'App',
 
   mixins: [UIStore.mixin],
 
@@ -54,14 +48,28 @@ module.exports = App = React.createClass({displayName: 'App',
       React.createElement("div", {className: "container"}, 
         React.createElement(Header, null), 
         React.createElement(Navigation, {navigationActive: this.state.navigationActive}), 
+        React.createElement("section", null, 
         this.props.activeRouteHandler()
+        )
       )
     )
 
   }
 
 });
-},{"../stores/UIStore":"/Users/kenwheeler/Projects/app-template/stores/UIStore.js","./common/Header":"/Users/kenwheeler/Projects/app-template/components/common/Header.js","./common/Navigation":"/Users/kenwheeler/Projects/app-template/components/common/Navigation.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/common/Header.js":[function(require,module,exports){
+
+module.exports = App;
+},{"../stores/UIStore":"/Users/kenwheeler/Projects/app-template/stores/UIStore.js","./common/Header":"/Users/kenwheeler/Projects/app-template/components/common/Header.js","./common/Navigation":"/Users/kenwheeler/Projects/app-template/components/common/Navigation.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/account/AccountIndex.js":[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: 'exports',
+  render: function(){
+    return (
+      React.createElement("h1", null, "Account")
+    )
+  }
+});
+},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/common/Header.js":[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: 'exports',
@@ -75,6 +83,8 @@ module.exports = React.createClass({displayName: 'exports',
 });
 },{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/common/Navigation.js":[function(require,module,exports){
 var React = require('react');
+var Router = require('react-router');
+var Link = Router.Link;
 var MenuButton = require('../elements/MenuButton');
 var UIActions = require('../../actions/UIActions');
 
@@ -86,19 +96,16 @@ module.exports = React.createClass({displayName: 'exports',
     return (
       React.createElement("nav", null, 
         React.createElement("ul", {className: this.props.navigationActive ? 'active' : ''}, 
-          React.createElement("li", null, React.createElement("a", {href: "#"}, "Item 1")), 
-          React.createElement("li", null, React.createElement("a", {href: "#"}, "Item 2")), 
-          React.createElement("li", null, React.createElement("a", {href: "#"}, "Item 3")), 
-          React.createElement("li", null, React.createElement("a", {href: "#"}, "Item 4")), 
-          React.createElement("li", null, React.createElement("a", {href: "#"}, "Item 5")), 
-          React.createElement("li", null, React.createElement("a", {href: "#"}, "Item 6"))
+          React.createElement("li", null, React.createElement(Link, {to: "home", onClick: this.handleClick}, "Home")), 
+          React.createElement("li", null, React.createElement(Link, {to: "posts", onClick: this.handleClick}, "Posts")), 
+          React.createElement("li", null, React.createElement(Link, {to: "account", onClick: this.handleClick}, "Account"))
         ), 
         React.createElement(MenuButton, {onClick: this.handleClick, active: this.props.navigationActive})
       )
     )
   }
 });
-},{"../../actions/UIActions":"/Users/kenwheeler/Projects/app-template/actions/UIActions.js","../elements/MenuButton":"/Users/kenwheeler/Projects/app-template/components/elements/MenuButton.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/elements/MenuButton.js":[function(require,module,exports){
+},{"../../actions/UIActions":"/Users/kenwheeler/Projects/app-template/actions/UIActions.js","../elements/MenuButton":"/Users/kenwheeler/Projects/app-template/components/elements/MenuButton.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react-router":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/index.js"}],"/Users/kenwheeler/Projects/app-template/components/elements/MenuButton.js":[function(require,module,exports){
 var React = require('react');
 
 module.exports = React.createClass({displayName: 'exports',
@@ -151,6 +158,16 @@ var styles = {
     }
   }
 }
+},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/home/HomeIndex.js":[function(require,module,exports){
+var React = require('react');
+
+module.exports = React.createClass({displayName: 'exports',
+  render: function(){
+    return (
+      React.createElement("h1", null, "Home")
+    )
+  }
+});
 },{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/components/posts/PostsIndex.js":[function(require,module,exports){
 var React = require('react');
 
@@ -1852,7 +1869,202 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/flux/index.js":[function(require,module,exports){
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/index.js":[function(require,module,exports){
+module.exports = require('./lib/McFly');
+},{"./lib/McFly":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/McFly.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Action.js":[function(require,module,exports){
+var Dispatcher = require('./Dispatcher');
+var invariant = require('invariant');
+
+/**
+ * Action class
+ */
+
+
+  /**
+   * Constructs an Action object
+   *
+   * @param {function} callback - Callback method for Action
+   * @constructor
+   */
+  function Action(callback) {"use strict";
+    this.callback = callback;
+  }
+
+  /**
+   * Calls callback method from Dispatcher
+   *
+   * @param {...*} arguments - arguments for callback method
+   * @constructor
+   */
+  Action.prototype.dispatch=function() {"use strict";
+    var payload = this.callback.apply(this, arguments);
+    invariant(payload.actionType, "Payload object requires an actionType property");
+    Dispatcher.dispatch(payload);
+  };
+
+
+module.exports = Action;
+},{"./Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js","invariant":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/invariant/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/ActionsFactory.js":[function(require,module,exports){
+var Action = require('./Action');
+var assign = require('object-assign');
+
+/**
+ * ActionsFactory class
+ */
+
+
+  /**
+   * Constructs an ActionsFactory object and translates actions parameter into
+   * Action objects.
+   *
+   * @param {object} actions - Object with methods to create actions with
+   * @constructor
+   */
+  function ActionsFactory(actions) {"use strict";
+    var $ActionsFactory_actions = {}, a, action;
+    for (a in actions) {
+      if(actions.hasOwnProperty(a)){
+        action = new Action(actions[a]);
+        $ActionsFactory_actions[a] = action.dispatch.bind(action);
+      }
+    }
+    assign(this, $ActionsFactory_actions);
+  }
+
+
+module.exports = ActionsFactory;
+},{"./Action":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Action.js","object-assign":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/object-assign/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js":[function(require,module,exports){
+var Dispatcher = require('flux').Dispatcher;
+
+/** Creates a singlar instance of Facebook's Dispatcher */
+var AppDispatcher = new Dispatcher();
+
+module.exports = AppDispatcher;
+},{"flux":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/flux/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/McFly.js":[function(require,module,exports){
+var Dispatcher = require('./Dispatcher');
+var Store = require('./Store');
+var ActionsFactory = require('./ActionsFactory');
+var assign = require('object-assign');
+
+/**
+ * Main McFly Class
+ */
+
+
+  /**
+   * Instatiates McFly along with actions object, stores array and sets
+   * dispatcher to Dispatcher.
+   *
+   * @constructor
+   */
+  function McFly(){"use strict";
+    this.actions = {};
+    this.stores = [];
+    this.dispatcher = Dispatcher;
+  }
+
+  /**
+   * Creates an instance of a Store, registers the supplied callback with the
+   * dispatcher, and pushes it into the global list of stores
+   *
+   * @param {object} methods - Public methods for Store instance
+   * @param {function} callback - Callback method for Dispatcher dispatches
+   * @return {object} - Returns instance of Store
+   */
+  McFly.prototype.createStore=function(methods,callback){"use strict";
+    var store = new Store(methods,callback);
+    store.dispatcherID = this.dispatcher.register(store.callback);
+    this.stores.push(store);
+    return store;
+  };
+
+  /**
+   * Creates an instance of an ActionsFactory and adds the supplied actions
+   * to the global list of actions
+   *
+   * @param {object} actions - Action methods
+   * @return {object} - Returns instance of ActionsFactory
+   */
+  McFly.prototype.createActions=function(actions) {"use strict";
+    var actionFactory = new ActionsFactory(actions);
+    assign(this.actions,actionFactory);
+    return actionFactory;
+  };
+
+
+
+module.exports = McFly;
+},{"./ActionsFactory":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/ActionsFactory.js","./Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js","./Store":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Store.js","object-assign":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/object-assign/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Store.js":[function(require,module,exports){
+var EventEmitter = require('events').EventEmitter;
+var Dispatcher = require('./Dispatcher');
+var assign = require('object-assign');
+var invariant = require('invariant');
+
+/**
+ * Store class
+ */
+
+
+  /**
+   * Constructs a Store object, extends it with EventEmitter and supplied
+   * methods parameter,  and creates a mixin property for use in components.
+   *
+   * @param {object} methods - Public methods for Store instance
+   * @param {function} callback - Callback method for Dispatcher dispatches
+   * @constructor
+   */
+  function Store(methods, callback) {"use strict";
+    var self = this;
+    this.callback = callback;
+    invariant(!methods.callback, '"callback" is a reserved name and cannot be used as a method name.');
+    invariant(!methods.mixin,'"mixin" is a reserved name and cannot be used as a method name.');
+    assign(this, EventEmitter.prototype, methods);
+    this.mixin = {
+      componentDidMount: function() {
+        self.addChangeListener(this.onChange);
+      },
+      componentWillUnmount: function() {
+        self.removeChangeListener(this.onChange);
+      }
+    }
+  }
+
+  /**
+   * Returns dispatch token
+   */
+  Store.prototype.getDispatchToken=function() {"use strict";
+    return this.dispatcherID;
+  };
+
+  /**
+   * Emits change event
+   */
+  Store.prototype.emitChange=function() {"use strict";
+    this.emit('change');
+  };
+
+  /**
+   * Adds a change listener
+   *
+   * @param {function} callback - Callback method for change event
+   */
+  Store.prototype.addChangeListener=function(callback) {"use strict";
+    this.on('change', callback);
+  };
+
+  /**
+   * Removes a change listener
+   *
+   * @param {function} callback - Callback method for change event
+   */
+  Store.prototype.removeChangeListener=function(callback) {"use strict";
+    this.removeListener('change', callback);
+  };
+
+
+
+module.exports = Store;
+},{"./Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js","events":"/Users/kenwheeler/Projects/app-template/node_modules/browserify/node_modules/events/events.js","invariant":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/invariant/invariant.js","object-assign":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/object-assign/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/flux/index.js":[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -1864,7 +2076,7 @@ process.chdir = function (dir) {
 
 module.exports.Dispatcher = require('./lib/Dispatcher')
 
-},{"./lib/Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/flux/lib/Dispatcher.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/flux/lib/Dispatcher.js":[function(require,module,exports){
+},{"./lib/Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/flux/lib/Dispatcher.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/flux/lib/Dispatcher.js":[function(require,module,exports){
 /*
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -2116,7 +2328,7 @@ var _prefix = 'ID_';
 
 module.exports = Dispatcher;
 
-},{"./invariant":"/Users/kenwheeler/Projects/app-template/node_modules/flux/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/flux/lib/invariant.js":[function(require,module,exports){
+},{"./invariant":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/flux/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/flux/lib/invariant.js":[function(require,module,exports){
 /**
  * Copyright (c) 2014, Facebook, Inc.
  * All rights reserved.
@@ -2171,202 +2383,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/index.js":[function(require,module,exports){
-module.exports = require('./lib/McFly');
-},{"./lib/McFly":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/McFly.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Action.js":[function(require,module,exports){
-var Dispatcher = require('./Dispatcher');
-var invariant = require('invariant');
-
-/**
- * Action class
- */
-
-
-  /**
-   * Constructs an Action object
-   *
-   * @param {function} callback - Callback method for Action
-   * @constructor
-   */
-  function Action(callback) {"use strict";
-    this.callback = callback;
-  }
-
-  /**
-   * Calls callback method from Dispatcher
-   *
-   * @param {...*} arguments - arguments for callback method
-   * @constructor
-   */
-  Action.prototype.dispatch=function() {"use strict";
-    var payload = this.callback.apply(this, arguments);
-    invariant(payload.actionType, "Payload object requires an actionType property");
-    Dispatcher.dispatch(payload);
-  };
-
-
-module.exports = Action;
-},{"./Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js","invariant":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/invariant/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/ActionsFactory.js":[function(require,module,exports){
-var Action = require('./Action');
-var assign = require('object-assign');
-
-/**
- * ActionsFactory class
- */
-
-
-  /**
-   * Constructs an ActionsFactory object and translates actions parameter into
-   * Action objects.
-   *
-   * @param {object} actions - Object with methods to create actions with
-   * @constructor
-   */
-  function ActionsFactory(actions) {"use strict";
-    var $ActionsFactory_actions = {}, a, action;
-    for (a in actions) {
-      if(actions.hasOwnProperty(a)){
-        action = new Action(actions[a]);
-        $ActionsFactory_actions[a] = action.dispatch.bind(action);
-      }
-    }
-    assign(this, $ActionsFactory_actions);
-  }
-
-
-module.exports = ActionsFactory;
-},{"./Action":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Action.js","object-assign":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/object-assign/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js":[function(require,module,exports){
-var Dispatcher = require('flux').Dispatcher;
-
-/** Creates a singlar instance of Facebook's Dispatcher */
-var AppDispatcher = new Dispatcher();
-
-module.exports = AppDispatcher;
-},{"flux":"/Users/kenwheeler/Projects/app-template/node_modules/flux/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/McFly.js":[function(require,module,exports){
-var Dispatcher = require('./Dispatcher');
-var Store = require('./Store');
-var ActionsFactory = require('./ActionsFactory');
-var assign = require('object-assign');
-
-/**
- * Main McFly Class
- */
-
-
-  /**
-   * Instatiates McFly along with actions object, stores array and sets
-   * dispatcher to Dispatcher.
-   *
-   * @constructor
-   */
-  function McFly(){"use strict";
-    this.actions = {};
-    this.stores = [];
-    this.dispatcher = Dispatcher;
-  }
-
-  /**
-   * Creates an instance of a Store, registers the supplied callback with the
-   * dispatcher, and pushes it into the global list of stores
-   *
-   * @param {object} methods - Public methods for Store instance
-   * @param {function} callback - Callback method for Dispatcher dispatches
-   * @return {object} - Returns instance of Store
-   */
-  McFly.prototype.createStore=function(methods,callback){"use strict";
-    var store = new Store(methods,callback);
-    store.dispatcherID = this.dispatcher.register(store.callback);
-    this.stores.push(store);
-    return store;
-  };
-
-  /**
-   * Creates an instance of an ActionsFactory and adds the supplied actions
-   * to the global list of actions
-   *
-   * @param {object} actions - Action methods
-   * @return {object} - Returns instance of ActionsFactory
-   */
-  McFly.prototype.createActions=function(actions) {"use strict";
-    var actionFactory = new ActionsFactory(actions);
-    assign(this.actions,actionFactory);
-    return actionFactory;
-  };
-
-
-
-module.exports = McFly;
-},{"./ActionsFactory":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/ActionsFactory.js","./Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js","./Store":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Store.js","object-assign":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/object-assign/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Store.js":[function(require,module,exports){
-var EventEmitter = require('events').EventEmitter;
-var Dispatcher = require('./Dispatcher');
-var assign = require('object-assign');
-var invariant = require('invariant');
-
-/**
- * Store class
- */
-
-
-  /**
-   * Constructs a Store object, extends it with EventEmitter and supplied
-   * methods parameter,  and creates a mixin property for use in components.
-   *
-   * @param {object} methods - Public methods for Store instance
-   * @param {function} callback - Callback method for Dispatcher dispatches
-   * @constructor
-   */
-  function Store(methods, callback) {"use strict";
-    var self = this;
-    this.callback = callback;
-    invariant(!methods.callback, '"callback" is a reserved name and cannot be used as a method name.');
-    invariant(!methods.mixin,'"mixin" is a reserved name and cannot be used as a method name.');
-    assign(this, EventEmitter.prototype, methods);
-    this.mixin = {
-      componentDidMount: function() {
-        self.addChangeListener(this.onChange);
-      },
-      componentWillUnmount: function() {
-        self.removeChangeListener(this.onChange);
-      }
-    }
-  }
-
-  /**
-   * Returns dispatch token
-   */
-  Store.prototype.getDispatchToken=function() {"use strict";
-    return this.dispatcherID;
-  };
-
-  /**
-   * Emits change event
-   */
-  Store.prototype.emitChange=function() {"use strict";
-    this.emit('change');
-  };
-
-  /**
-   * Adds a change listener
-   *
-   * @param {function} callback - Callback method for change event
-   */
-  Store.prototype.addChangeListener=function(callback) {"use strict";
-    this.on('change', callback);
-  };
-
-  /**
-   * Removes a change listener
-   *
-   * @param {function} callback - Callback method for change event
-   */
-  Store.prototype.removeChangeListener=function(callback) {"use strict";
-    this.removeListener('change', callback);
-  };
-
-
-
-module.exports = Store;
-},{"./Dispatcher":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/lib/Dispatcher.js","events":"/Users/kenwheeler/Projects/app-template/node_modules/browserify/node_modules/events/events.js","invariant":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/invariant/invariant.js","object-assign":"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/object-assign/index.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/invariant/invariant.js":[function(require,module,exports){
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/mcfly/node_modules/invariant/invariant.js":[function(require,module,exports){
 /**
  * BSD License
  *
@@ -2483,473 +2500,7 @@ module.exports = Object.assign || function (target, source) {
 	return to;
 };
 
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Match.js":[function(require,module,exports){
-/**
- * A Match is created when a Route matches on a URL path.
- */
-function Match(route, params) {
-  this.route = route;
-  this.params = params;
-  this.element = null;
-}
-
-module.exports = Match;
-
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Route.js":[function(require,module,exports){
-/**
- * A Route couples a URL path with a ReactElement class
- * that is rendered when that URL matches its path.
- */
-function Route(handler, name) {
-  this.handler = handler;
-  this.name = name;
-  this.path = null;
-  this.paramNames = null;
-  this.defaultRoute = null;
-  this.notFoundRoute = null;
-  this.childRoutes = null;
-}
-
-module.exports = Route;
-
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Router.js":[function(require,module,exports){
-(function (process){
-var React = require('react');
-var assign = require('react/lib/Object.assign');
-var warning = require('react/lib/warning');
-var invariant = require('react/lib/invariant');
-var canUseDOM = require('react/lib/ExecutionEnvironment').canUseDOM;
-var createRoutesFromChildren = require('./utils/createRoutesFromChildren');
-var createRouteHandler = require('./utils/createRouteHandler');
-var reversedArray = require('./utils/reversedArray');
-var HashLocation = require('./locations/HashLocation');
-var HistoryLocation = require('./locations/HistoryLocation');
-var supportsHistory = require('./utils/supportsHistory');
-var Redirect = require('./utils/Redirect');
-var Path = require('./utils/Path');
-var Transition = require('./Transition');
-var Match = require('./Match');
-
-function getRootMatch(matches) {
-  return matches[matches.length - 1];
-}
-
-function findMatches(path, routes, defaultRoute, notFoundRoute) {
-  var matches = null, route, params;
-
-  for (var i = 0, len = routes.length; i < len; ++i) {
-    route = routes[i];
-
-    // Check the subtree first to find the most deeply-nested match.
-    matches = findMatches(path, route.childRoutes, route.defaultRoute, route.notFoundRoute);
-
-    if (matches != null) {
-      var rootParams = getRootMatch(matches).params;
-
-      params = route.paramNames.reduce(function (params, paramName) {
-        params[paramName] = rootParams[paramName];
-        return params;
-      }, {});
-
-      matches.unshift(new Match(route, params));
-
-      return matches;
-    }
-
-    // No routes in the subtree matched, so check this route.
-    params = Path.extractParams(route.path, path);
-
-    if (params)
-      return [ new Match(route, params) ];
-  }
-
-  // No routes matched, so try the default route if there is one.
-  if (defaultRoute && (params = Path.extractParams(defaultRoute.path, path)))
-    return [ new Match(defaultRoute, params) ];
-
-  // Last attempt: does the "not found" route match?
-  if (notFoundRoute && (params = Path.extractParams(notFoundRoute.path, path)))
-    return [ new Match(notFoundRoute, params) ];
-
-  return matches;
-}
-
-function hasMatch(matches, match) {
-  return matches.some(function (m) {
-    if (m.route !== match.route)
-      return false;
-
-    for (var property in m.params)
-      if (m.params[property] !== match.params[property])
-        return false;
-
-    return true;
-  });
-}
-
-/**
- * Calls the willTransitionFrom hook of all handlers in the given matches
- * serially in reverse with the transition object and the current instance of
- * the route's handler, so that the deepest nested handlers are called first.
- * Calls callback(error) when finished.
- */
-function runTransitionFromHooks(matches, transition, callback) {
-  var hooks = reversedArray(matches).map(function (match) {
-    return function () {
-      var handler = match.route.handler;
-
-      if (!transition.isAborted && handler.willTransitionFrom)
-        return handler.willTransitionFrom(transition, match.element);
-
-      var promise = transition.promise;
-      delete transition.promise;
-
-      return promise;
-    };
-  });
-
-  runHooks(hooks, callback);
-}
-
-/**
- * Calls the willTransitionTo hook of all handlers in the given matches
- * serially with the transition object and any params that apply to that
- * handler. Calls callback(error) when finished.
- */
-function runTransitionToHooks(matches, transition, query, callback) {
-  var hooks = matches.map(function (match) {
-    return function () {
-      var handler = match.route.handler;
-
-      if (!transition.isAborted && handler.willTransitionTo)
-        handler.willTransitionTo(transition, match.params, query);
-
-      var promise = transition.promise;
-      delete transition.promise;
-
-      return promise;
-    };
-  });
-
-  runHooks(hooks, callback);
-}
-
-/**
- * Runs all hook functions serially and calls callback(error) when finished.
- * A hook may return a promise if it needs to execute asynchronously.
- */
-function runHooks(hooks, callback) {
-  try {
-    var promise = hooks.reduce(function (promise, hook) {
-      // The first hook to use transition.wait makes the rest
-      // of the transition async from that point forward.
-      return promise ? promise.then(hook) : hook();
-    }, null);
-  } catch (error) {
-    return callback(error); // Sync error.
-  }
-
-  if (promise) {
-    // Use setTimeout to break the promise chain.
-    promise.then(function () {
-      setTimeout(callback);
-    }, function (error) {
-      setTimeout(function () {
-        callback(error);
-      });
-    });
-  } else {
-    callback();
-  }
-}
-
-function defaultErrorHandler(error) {
-  // Throw so we don't silently swallow async errors.
-  throw error; // This error probably originated in a transition hook.
-}
-
-function defaultAbortHandler(abortReason, location) {
-  if (typeof location === 'string')
-    throw new Error('Unhandled aborted transition! Reason: ' + abortReason);
-
-  if (abortReason instanceof Redirect) {
-    location.replace(this.makePath(abortReason.to, abortReason.params, abortReason.query));
-  } else {
-    location.pop();
-  }
-}
-
-/**
- * A Router is a container for a set of routes and state.
- */
-function Router(routes, onError, onAbort) {
-  this.routes = [];
-  this.namedRoutes = {};
-  this.defaultRoute = null;
-  this.notFoundRoute = null;
-  this.onAbort = (onAbort || defaultAbortHandler).bind(this);
-  this.onError = (onError || defaultErrorHandler).bind(this);
-  this.state = {};
-
-  if (routes)
-    this.addRoutes(routes);
-}
-
-assign(Router.prototype, {
-
-  /**
-   * Adds all routes in the given nested routes config to this router.
-   */
-  addRoutes: function (routes) {
-    this.routes.push.apply(this.routes, createRoutesFromChildren(routes, this, this.namedRoutes));
-  },
-
-  /**
-   * Returns an absolute URL path created from the given route
-   * name, URL parameters, and query.
-   */
-  makePath: function (to, params, query) {
-    var path;
-    if (Path.isAbsolute(to)) {
-      path = Path.normalize(to);
-    } else {
-      var route = this.namedRoutes[to];
-
-      invariant(
-        route,
-        'Unable to find a <Route> with name="%s"',
-        to
-      );
-
-      path = route.path;
-    }
-
-    return Path.withQuery(Path.injectParams(path, params), query);
-  },
-
-  /**
-   * Performs a depth-first search for the first route in the tree that matches on
-   * the given path. Returns an array of Match objects leading to the route that
-   * matched, ordered by depth in the component hierarchy. Returns null if no route
-   * in the tree matched the path.
-   *
-   *   new Router(
-   *     <Route handler={App}>
-   *       <Route name="posts" handler={Posts}/>
-   *       <Route name="post" path="/posts/:id" handler={Post}/>
-   *     </Route>
-   *   ).match('/posts/123'); => [ { route: <AppRoute>, params: {} },
-   *                               { route: <PostRoute>, params: { id: '123' } } ]
-   */
-  match: function (path) {
-    return findMatches(Path.withoutQuery(path), this.routes, this.defaultRoute, this.notFoundRoute);
-  },
-
-  /**
-   * Performs a transition to the given path and calls callback(error, abortReason)
-   * when the transition is finished. If both arguments are null the router's state
-   * was updated. Otherwise the transition did not complete.
-   *
-   * In a transition, a router first determines which routes are involved by beginning
-   * with the current route, up the route tree to the first parent route that is shared
-   * with the destination route, and back down the tree to the destination route. The
-   * willTransitionFrom hook is invoked on all route handlers we're transitioning away
-   * from, in reverse nesting order. Likewise, the willTransitionTo hook is invoked on
-   * all route handlers we're transitioning to.
-   *
-   * Both willTransitionFrom and willTransitionTo hooks may either abort or redirect the
-   * transition. To resolve asynchronously, they may use transition.wait(promise). If no
-   * hooks wait, the transition is fully synchronous.
-   */
-  dispatch: function (path, callback) {
-    var transition = new Transition(this, path);
-    var currentMatches = this.state.matches || [];
-    var nextMatches = this.match(path) || [];
-
-    warning(
-      nextMatches.length,
-      'No route matches path "%s". Make sure you have <Route path="%s"> somewhere in your <Routes>',
-      path, path
-    );
-
-    var fromMatches, toMatches;
-    if (currentMatches.length) {
-      fromMatches = currentMatches.filter(function (match) {
-        return !hasMatch(nextMatches, match);
-      });
-
-      toMatches = nextMatches.filter(function (match) {
-        return !hasMatch(currentMatches, match);
-      });
-    } else {
-      fromMatches = [];
-      toMatches = nextMatches;
-    }
-
-    var router = this;
-    var query = Path.extractQuery(path) || {};
-
-    runTransitionFromHooks(fromMatches, transition, function (error) {
-      if (error || transition.isAborted)
-        return callback.call(router, error, transition.abortReason);
-
-      runTransitionToHooks(toMatches, transition, query, function (error) {
-        if (error || transition.isAborted)
-          return callback.call(router, error, transition.abortReason);
-
-        var matches = currentMatches.slice(0, currentMatches.length - fromMatches.length).concat(toMatches);
-        var rootMatch = getRootMatch(matches);
-        var params = (rootMatch && rootMatch.params) || {};
-        var routes = matches.map(function (match) {
-          return match.route;
-        });
-
-        router._nextState = {
-          matches: matches,
-          path: path,
-          routes: routes,
-          params: params,
-          query: query
-        };
-
-        callback.call(router);
-      });
-    });
-  },
-
-  flipSwitch: function () {
-    this.state = this._nextState;
-    delete this._nextState;
-  }
-
-});
-
-/**
- * Runs a router (or a route config) using the given location and calls
- * callback(Handler, state) when the route changes. The Handler is a ReactElement
- * class that is used to render the current route hierarchy. The state argument
- * is the current state of the router.
- *
- * If the location is static (i.e. a URL path in a server environment) the callback
- * is only called once. Otherwise, the location should be one of the Router.*Location
- * objects (e.g. Router.HashLocation or Router.HistoryLocation).
- *
- * Using `window.location.hash` to manage the URL, you could do:
- *
- *   Router.run(routes, function (Handler) {
- *     React.render(<Handler/>, document.body);
- *   });
- * 
- * Using HTML5 history and a custom "cursor" prop:
- * 
- *   Router.run(routes, Router.HistoryLocation, function (Handler) {
- *     React.render(<Handler cursor={cursor}/>, document.body);
- *   });
- */
-Router.run = function (router, location, callback) {
-  if (typeof location === 'function') {
-    callback = location;
-    location = HashLocation;
-  }
-
-  // Automatically fall back to full page refreshes in
-  // browsers that do not support HTML5 history.
-  if (location === HistoryLocation && !supportsHistory())
-    location = RefreshLocation;
-
-  if (!(router instanceof Router))
-    router = new Router(router);
-
-  var Handler = createRouteHandler(router, location);
-
-  function dispatchHandler(error, abortReason) {
-    if (error) {
-      router.onError(error);
-    } else if (abortReason) {
-      router.onAbort(abortReason, location);
-    } else {
-      callback(Handler, router._nextState);
-    }
-  }
-
-  if (typeof location === 'string') {
-    warning(
-      !canUseDOM || process.env.NODE_ENV === 'test',
-      'You should not use a static location in a DOM environment because ' +
-      'the router will not be kept in sync with the current URL'
-    );
-
-    // Dispatch the location.
-    router.dispatch(location, dispatchHandler);
-  } else {
-    invariant(
-      canUseDOM,
-      'You cannot use %s in a non-DOM environment',
-      location
-    );
-
-    // Listen for changes to the location.
-    function changeListener(change) {
-      if (router.state.path !== change.path)
-        router.dispatch(change.path, dispatchHandler);
-    }
-
-    if (location.addChangeListener)
-      location.addChangeListener(changeListener);
-
-    // Bootstrap using the current path.
-    router.dispatch(
-      location.getCurrentPath(),
-      dispatchHandler
-    );
-  }
-};
-
-module.exports = Router;
-
-}).call(this,require('_process'))
-},{"./Match":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Match.js","./Transition":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Transition.js","./locations/HashLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js","./locations/HistoryLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HistoryLocation.js","./utils/Path":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js","./utils/Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Redirect.js","./utils/createRouteHandler":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/createRouteHandler.js","./utils/createRoutesFromChildren":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/createRoutesFromChildren.js","./utils/reversedArray":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/reversedArray.js","./utils/supportsHistory":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/supportsHistory.js","_process":"/Users/kenwheeler/Projects/app-template/node_modules/browserify/node_modules/process/browser.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/ExecutionEnvironment":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/Object.assign":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/Object.assign.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js","react/lib/warning":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/warning.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Transition.js":[function(require,module,exports){
-var assign = require('react/lib/Object.assign');
-var Redirect = require('./utils/Redirect');
-var Promise = require('./utils/Promise');
-
-/**
- * Encapsulates a transition to a given path.
- *
- * The willTransitionTo and willTransitionFrom handlers receive
- * an instance of this class as their first argument.
- */
-function Transition(routesComponent, path) {
-  this.routesComponent = routesComponent;
-  this.path = path;
-  this.abortReason = null;
-  this.isAborted = false;
-}
-
-assign(Transition.prototype, {
-
-  abort: function (reason) {
-    this.abortReason = reason;
-    this.isAborted = true;
-  },
-
-  redirect: function (to, params, query) {
-    this.abort(new Redirect(to, params, query));
-  },
-
-  wait: function (value) {
-    this.promise = Promise.resolve(value);
-  },
-
-  retry: function () {
-    this.routesComponent.replaceWith(this.path);
-  }
-
-});
-
-module.exports = Transition;
-
-},{"./utils/Promise":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Promise.js","./utils/Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Redirect.js","react/lib/Object.assign":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/Object.assign.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/actions/LocationActions.js":[function(require,module,exports){
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/actions/LocationActions.js":[function(require,module,exports){
 /**
  * Actions that modify the URL.
  */
@@ -2974,9 +2525,53 @@ var LocationActions = {
 
 module.exports = LocationActions;
 
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/behaviors/ImitateBrowserBehavior.js":[function(require,module,exports){
+var LocationActions = require('../actions/LocationActions');
+
+/**
+ * A scroll behavior that attempts to imitate the default behavior
+ * of modern browsers.
+ */
+var ImitateBrowserBehavior = {
+
+  updateScrollPosition: function (position, actionType) {
+    switch (actionType) {
+      case LocationActions.PUSH:
+      case LocationActions.REPLACE:
+        window.scrollTo(0, 0);
+        break;
+      case LocationActions.POP:
+        if (position) {
+          window.scrollTo(position.x, position.y);
+        } else {
+          window.scrollTo(0, 0);
+        }
+        break;
+    }
+  }
+
+};
+
+module.exports = ImitateBrowserBehavior;
+
+},{"../actions/LocationActions":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/actions/LocationActions.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/behaviors/ScrollToTopBehavior.js":[function(require,module,exports){
+/**
+ * A scroll behavior that always scrolls to the top of the page
+ * after a transition.
+ */
+var ScrollToTopBehavior = {
+
+  updateScrollPosition: function () {
+    window.scrollTo(0, 0);
+  }
+
+};
+
+module.exports = ScrollToTopBehavior;
+
 },{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/DefaultRoute.js":[function(require,module,exports){
-var React = require('react');
-var ConfigRoute = require('../mixins/ConfigRoute');
+var merge = require('react/lib/merge');
+var Route = require('./Route');
 
 /**
  * A <DefaultRoute> component is a special kind of <Route> that
@@ -2984,28 +2579,23 @@ var ConfigRoute = require('../mixins/ConfigRoute');
  * Only one such route may be used at any given level in the
  * route hierarchy.
  */
-var DefaultRoute = React.createClass({
-  mixins: [ ConfigRoute ],
-
-  getDefaultProps: function () {
-    return {
-      // TODO: make sure we ignore any path the user might supply, or
-      // throw/warn when we encounter it
+function DefaultRoute(props) {
+  return Route(
+    merge(props, {
       path: null,
       isDefault: true
-    };
-  }
-});
+    })
+  );
+}
 
 module.exports = DefaultRoute;
 
-
-},{"../mixins/ConfigRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ConfigRoute.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Link.js":[function(require,module,exports){
+},{"./Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","react/lib/merge":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/merge.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Link.js":[function(require,module,exports){
 var React = require('react');
 var classSet = require('react/lib/cx');
-var assign = require('react/lib/Object.assign');
+var merge = require('react/lib/merge');
+var ActiveState = require('../mixins/ActiveState');
 var Navigation = require('../mixins/Navigation');
-var State = require('../mixins/State');
 
 function isLeftClickEvent(event) {
   return event.button === 0;
@@ -3037,7 +2627,7 @@ var Link = React.createClass({
 
   displayName: 'Link',
 
-  mixins: [ Navigation, State ],
+  mixins: [ ActiveState, Navigation ],
 
   propTypes: {
     activeClassName: React.PropTypes.string.isRequired,
@@ -3096,7 +2686,7 @@ var Link = React.createClass({
   },
 
   render: function () {
-    var props = assign({}, this.props, {
+    var props = merge(this.props, {
       href: this.getHref(),
       className: this.getClassName(),
       onClick: this.handleClick
@@ -3109,9 +2699,9 @@ var Link = React.createClass({
 
 module.exports = Link;
 
-},{"../mixins/Navigation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/Navigation.js","../mixins/State":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/State.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/Object.assign":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/Object.assign.js","react/lib/cx":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/cx.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/NotFoundRoute.js":[function(require,module,exports){
-var React = require('react');
-var ConfigRoute = require('../mixins/ConfigRoute');
+},{"../mixins/ActiveState":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ActiveState.js","../mixins/Navigation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/Navigation.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/cx":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/cx.js","react/lib/merge":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/merge.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/NotFoundRoute.js":[function(require,module,exports){
+var merge = require('react/lib/merge');
+var Route = require('./Route');
 
 /**
  * A <NotFoundRoute> is a special kind of <Route> that
@@ -3120,25 +2710,20 @@ var ConfigRoute = require('../mixins/ConfigRoute');
  * Only one such route may be used at any given level in the
  * route hierarchy.
  */
-var NotFoundRoute = React.createClass({
-  mixins: [ ConfigRoute ],
-
-  getDefaultProps: function () {
-    return {
-      // TODO: make sure we ignore any path the user might supply, or
-      // throw/warn when we encounter it
+function NotFoundRoute(props) {
+  return Route(
+    merge(props, {
       path: null,
       catchAll: true
-    };
-  }
-});
+    })
+  );
+}
 
 module.exports = NotFoundRoute;
 
-
-},{"../mixins/ConfigRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ConfigRoute.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Redirect.js":[function(require,module,exports){
+},{"./Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","react/lib/merge":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/merge.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Redirect.js":[function(require,module,exports){
 var React = require('react');
-var Route = require('../components/Route');
+var Route = require('./Route');
 
 function createRedirectHandler(to, _params, _query) {
   return React.createClass({
@@ -3158,42 +2743,33 @@ function createRedirectHandler(to, _params, _query) {
  * A <Redirect> component is a special kind of <Route> that always
  * redirects to another route when it matches.
  */
-var Redirect = React.createClass({
-  statics: {
-    createRoute: function (props) {
-      return Route({
-        name: props.name,
-        path: props.from,
-        handler: createRedirectHandler(props.to, props.params, props.query)
-      });
-    }
-  },
-
-  propTypes: {
-    from: React.PropTypes.string.isRequired,
-    to: React.PropTypes.string.isRequired,
-    params: React.PropTypes.object,
-    query: React.PropTypes.object,
-    isRedirect: React.PropTypes.bool
-  },
-
-  getDefaultProps: function () {
-    return {
-      isRedirect: true
-    };
-  },
-
-  render: function () {
-    return null;
-  }
-});
+function Redirect(props) {
+  return Route({
+    name: props.name,
+    path: props.from || props.path || '*',
+    handler: createRedirectHandler(props.to, props.params, props.query)
+  });
+}
 
 module.exports = Redirect;
 
-
-},{"../components/Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js":[function(require,module,exports){
+},{"./Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js":[function(require,module,exports){
 var React = require('react');
-var ConfigRoute = require('../mixins/ConfigRoute');
+var withoutProperties = require('../utils/withoutProperties');
+
+/**
+ * A map of <Route> component props that are reserved for use by the
+ * router and/or React. All other props are considered "static" and
+ * are passed through to the route handler.
+ */
+var RESERVED_PROPS = {
+  handler: true,
+  path: true,
+  defaultRoute: true,
+  notFoundRoute: true,
+  paramNames: true,
+  children: true // ReactChildren
+};
 
 /**
  * <Route> components specify components that are rendered to the page when the
@@ -3244,92 +2820,619 @@ var Route = React.createClass({
 
   displayName: 'Route',
 
-  mixins: [ ConfigRoute ],
+  statics: {
+
+    getUnreservedProps: function (props) {
+      return withoutProperties(props, RESERVED_PROPS);
+    }
+
+  },
 
   propTypes: {
+    handler: React.PropTypes.any.isRequired,
+    path: React.PropTypes.string,
+    name: React.PropTypes.string,
     ignoreScrollBehavior: React.PropTypes.bool
+  },
+
+  render: function () {
+    throw new Error(
+      'The <Route> component should not be rendered directly. You may be ' +
+      'missing a <Routes> wrapper around your list of routes.'
+    );
   }
 
 });
 
 module.exports = Route;
 
-},{"../mixins/ConfigRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ConfigRoute.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/RouteHandler.js":[function(require,module,exports){
+},{"../utils/withoutProperties":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/withoutProperties.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Routes.js":[function(require,module,exports){
 var React = require('react');
+var warning = require('react/lib/warning');
+var invariant = require('react/lib/invariant');
+var copyProperties = require('react/lib/copyProperties');
+var HashLocation = require('../locations/HashLocation');
+var ActiveContext = require('../mixins/ActiveContext');
+var LocationContext = require('../mixins/LocationContext');
+var RouteContext = require('../mixins/RouteContext');
+var ScrollContext = require('../mixins/ScrollContext');
+var reversedArray = require('../utils/reversedArray');
+var Transition = require('../utils/Transition');
+var Redirect = require('../utils/Redirect');
+var Path = require('../utils/Path');
+var Route = require('./Route');
+
+function makeMatch(route, params) {
+  return { route: route, params: params };
+}
+
+function getRootMatch(matches) {
+  return matches[matches.length - 1];
+}
+
+function findMatches(path, routes, defaultRoute, notFoundRoute) {
+  var matches = null, route, params;
+
+  for (var i = 0, len = routes.length; i < len; ++i) {
+    route = routes[i];
+
+    // Check the subtree first to find the most deeply-nested match.
+    matches = findMatches(path, route.props.children, route.props.defaultRoute, route.props.notFoundRoute);
+
+    if (matches != null) {
+      var rootParams = getRootMatch(matches).params;
+
+      params = route.props.paramNames.reduce(function (params, paramName) {
+        params[paramName] = rootParams[paramName];
+        return params;
+      }, {});
+
+      matches.unshift(makeMatch(route, params));
+
+      return matches;
+    }
+
+    // No routes in the subtree matched, so check this route.
+    params = Path.extractParams(route.props.path, path);
+
+    if (params)
+      return [ makeMatch(route, params) ];
+  }
+
+  // No routes matched, so try the default route if there is one.
+  if (defaultRoute && (params = Path.extractParams(defaultRoute.props.path, path)))
+    return [ makeMatch(defaultRoute, params) ];
+
+  // Last attempt: does the "not found" route match?
+  if (notFoundRoute && (params = Path.extractParams(notFoundRoute.props.path, path)))
+    return [ makeMatch(notFoundRoute, params) ];
+
+  return matches;
+}
+
+function hasMatch(matches, match) {
+  return matches.some(function (m) {
+    if (m.route !== match.route)
+      return false;
+
+    for (var property in m.params)
+      if (m.params[property] !== match.params[property])
+        return false;
+
+    return true;
+  });
+}
 
 /**
- * An <RouteHandler> component renders the active child route handler
- * when routes are nested.
+ * Calls the willTransitionFrom hook of all handlers in the given matches
+ * serially in reverse with the transition object and the current instance of
+ * the route's handler, so that the deepest nested handlers are called first.
+ * Calls callback(error) when finished.
  */
-var RouteHandler = React.createClass({
+function runTransitionFromHooks(matches, transition, callback) {
+  var hooks = reversedArray(matches).map(function (match) {
+    return function () {
+      var handler = match.route.props.handler;
 
-  displayName: 'RouteHandler',
+      if (!transition.isAborted && handler.willTransitionFrom)
+        return handler.willTransitionFrom(transition, match.component);
 
-  contextTypes: {
-    registerRouteHandlerElement: React.PropTypes.func.isRequired,
-    unregisterRouteHandlerElement: React.PropTypes.func.isRequired,
-    getRouteMatchAtDepth: React.PropTypes.func.isRequired
+      var promise = transition.promise;
+      delete transition.promise;
+
+      return promise;
+    };
+  });
+
+  runHooks(hooks, callback);
+}
+
+/**
+ * Calls the willTransitionTo hook of all handlers in the given matches
+ * serially with the transition object and any params that apply to that
+ * handler. Calls callback(error) when finished.
+ */
+function runTransitionToHooks(matches, transition, query, callback) {
+  var hooks = matches.map(function (match) {
+    return function () {
+      var handler = match.route.props.handler;
+
+      if (!transition.isAborted && handler.willTransitionTo)
+        handler.willTransitionTo(transition, match.params, query);
+
+      var promise = transition.promise;
+      delete transition.promise;
+
+      return promise;
+    };
+  });
+
+  runHooks(hooks, callback);
+}
+
+/**
+ * Runs all hook functions serially and calls callback(error) when finished.
+ * A hook may return a promise if it needs to execute asynchronously.
+ */
+function runHooks(hooks, callback) {
+  try {
+    var promise = hooks.reduce(function (promise, hook) {
+      // The first hook to use transition.wait makes the rest
+      // of the transition async from that point forward.
+      return promise ? promise.then(hook) : hook();
+    }, null);
+  } catch (error) {
+    return callback(error); // Sync error.
+  }
+
+  if (promise) {
+    // Use setTimeout to break the promise chain.
+    promise.then(function () {
+      setTimeout(callback);
+    }, function (error) {
+      setTimeout(function () {
+        callback(error);
+      });
+    });
+  } else {
+    callback();
+  }
+}
+
+function updateMatchComponents(matches, refs) {
+  var match;
+  for (var i = 0, len = matches.length; i < len; ++i) {
+    match = matches[i];
+    match.component = refs.__activeRoute__;
+
+    if (match.component == null)
+      break; // End of the tree.
+
+    refs = match.component.refs;
+  }
+}
+
+function shouldUpdateScroll(currentMatches, previousMatches) {
+  var commonMatches = currentMatches.filter(function (match) {
+    return previousMatches.indexOf(match) !== -1;
+  });
+
+  return !commonMatches.some(function (match) {
+    return match.route.props.ignoreScrollBehavior;
+  });
+}
+
+function returnNull() {
+  return null;
+}
+
+function routeIsActive(activeRoutes, routeName) {
+  return activeRoutes.some(function (route) {
+    return route.props.name === routeName;
+  });
+}
+
+function paramsAreActive(activeParams, params) {
+  for (var property in params)
+    if (String(activeParams[property]) !== String(params[property]))
+      return false;
+
+  return true;
+}
+
+function queryIsActive(activeQuery, query) {
+  for (var property in query)
+    if (String(activeQuery[property]) !== String(query[property]))
+      return false;
+
+  return true;
+}
+
+function defaultTransitionErrorHandler(error) {
+  // Throw so we don't silently swallow async errors.
+  throw error; // This error probably originated in a transition hook.
+}
+
+/**
+ * The <Routes> component configures the route hierarchy and renders the
+ * route matching the current location when rendered into a document.
+ *
+ * See the <Route> component for more details.
+ */
+var Routes = React.createClass({
+
+  displayName: 'Routes',
+
+  mixins: [ RouteContext, ActiveContext, LocationContext, ScrollContext ],
+
+  propTypes: {
+    initialPath: React.PropTypes.string,
+    initialMatches: React.PropTypes.array,
+    onChange: React.PropTypes.func,
+    onError: React.PropTypes.func.isRequired
   },
 
   getDefaultProps: function () {
     return {
-      ref: '__routeHandler__'
+      initialPath: null,
+      initialMatches: [],
+      onError: defaultTransitionErrorHandler
     };
   },
 
-  getMatch: function () {
-    return this.context.getRouteMatchAtDepth(this._routeDepth);
-  },
-
-  componentWillMount: function () {
-    this._routeDepth = this.context.registerRouteHandlerElement(this);
+  getInitialState: function () {
+    return {
+      path: this.props.initialPath,
+      matches: this.props.initialMatches
+    };
   },
 
   componentDidMount: function () {
-    this._updateMatchElement();
+    warning(
+      this._owner == null,
+      '<Routes> should be rendered directly using React.renderComponent, not ' +
+      'inside some other component\'s render method'
+    );
+
+    this._handleStateChange();
   },
 
   componentDidUpdate: function () {
-    this._updateMatchElement();
+    this._handleStateChange();
   },
 
-  _updateMatchElement: function () {
-    this.getMatch().element = this.refs[this.props.ref];
+  /**
+   * Performs a depth-first search for the first route in the tree that matches on
+   * the given path. Returns an array of all routes in the tree leading to the one
+   * that matched in the format { route, params } where params is an object that
+   * contains the URL parameters relevant to that route. Returns null if no route
+   * in the tree matches the path.
+   *
+   *   React.renderComponent(
+   *     <Routes>
+   *       <Route handler={App}>
+   *         <Route name="posts" handler={Posts}/>
+   *         <Route name="post" path="/posts/:id" handler={Post}/>
+   *       </Route>
+   *     </Routes>
+   *   ).match('/posts/123'); => [ { route: <AppRoute>, params: {} },
+   *                               { route: <PostRoute>, params: { id: '123' } } ]
+   */
+  match: function (path) {
+    var routes = this.getRoutes();
+    return findMatches(Path.withoutQuery(path), routes, this.props.defaultRoute, this.props.notFoundRoute);
   },
 
-  componentWillUnmount: function () {
-    this.context.unregisterRouteHandlerElement(this);
+  updateLocation: function (path, actionType) {
+    if (this.state.path === path)
+      return; // Nothing to do!
+
+    if (this.state.path)
+      this.recordScroll(this.state.path);
+
+    this.dispatch(path, function (error, abortReason, nextState) {
+      if (error) {
+        this.props.onError.call(this, error);
+      } else if (abortReason instanceof Redirect) {
+        this.replaceWith(abortReason.to, abortReason.params, abortReason.query);
+      } else if (abortReason) {
+        this.goBack();
+      } else {
+        this._nextStateChangeHandler = this._finishTransitionTo.bind(this, path, actionType, this.state.matches);
+        this.setState(nextState);
+      }
+    });
+  },
+
+  _handleStateChange: function () {
+    if (this._nextStateChangeHandler) {
+      this._nextStateChangeHandler();
+      delete this._nextStateChangeHandler;
+    }
+  },
+
+  _finishTransitionTo: function (path, actionType, previousMatches) {
+    var currentMatches = this.state.matches;
+    updateMatchComponents(currentMatches, this.refs);
+
+    if (shouldUpdateScroll(currentMatches, previousMatches))
+      this.updateScroll(path, actionType);
+
+    if (this.props.onChange)
+      this.props.onChange.call(this);
+  },
+
+  /**
+   * Performs a transition to the given path and calls callback(error, abortReason, nextState)
+   * when the transition is finished. If there was an error, the first argument will not be null.
+   * Otherwise, if the transition was aborted for some reason, it will be given in the second arg.
+   *
+   * In a transition, the router first determines which routes are involved by beginning with the
+   * current route, up the route tree to the first parent route that is shared with the destination
+   * route, and back down the tree to the destination route. The willTransitionFrom hook is invoked
+   * on all route handlers we're transitioning away from, in reverse nesting order. Likewise, the
+   * willTransitionTo hook is invoked on all route handlers we're transitioning to.
+   *
+   * Both willTransitionFrom and willTransitionTo hooks may either abort or redirect the transition.
+   * To resolve asynchronously, they may use transition.wait(promise). If no hooks wait, the
+   * transition will be synchronous.
+   */
+  dispatch: function (path, callback) {
+    var transition = new Transition(this, path);
+    var currentMatches = this.state ? this.state.matches : []; // No state server-side.
+    var nextMatches = this.match(path) || [];
+
+    warning(
+      nextMatches.length,
+      'No route matches path "%s". Make sure you have <Route path="%s"> somewhere in your <Routes>',
+      path, path
+    );
+
+    var fromMatches, toMatches;
+    if (currentMatches.length) {
+      fromMatches = currentMatches.filter(function (match) {
+        return !hasMatch(nextMatches, match);
+      });
+
+      toMatches = nextMatches.filter(function (match) {
+        return !hasMatch(currentMatches, match);
+      });
+    } else {
+      fromMatches = [];
+      toMatches = nextMatches;
+    }
+
+    var callbackScope = this;
+    var query = Path.extractQuery(path) || {};
+
+    runTransitionFromHooks(fromMatches, transition, function (error) {
+      if (error || transition.isAborted)
+        return callback.call(callbackScope, error, transition.abortReason);
+
+      runTransitionToHooks(toMatches, transition, query, function (error) {
+        if (error || transition.isAborted)
+          return callback.call(callbackScope, error, transition.abortReason);
+
+        var matches = currentMatches.slice(0, currentMatches.length - fromMatches.length).concat(toMatches);
+        var rootMatch = getRootMatch(matches);
+        var params = (rootMatch && rootMatch.params) || {};
+        var routes = matches.map(function (match) {
+          return match.route;
+        });
+
+        callback.call(callbackScope, null, null, {
+          path: path,
+          matches: matches,
+          activeRoutes: routes,
+          activeParams: params,
+          activeQuery: query
+        });
+      });
+    });
+  },
+
+  /**
+   * Returns the props that should be used for the top-level route handler.
+   */
+  getHandlerProps: function () {
+    var matches = this.state.matches;
+    var query = this.state.activeQuery;
+    var handler = returnNull;
+    var props = {
+      ref: null,
+      params: null,
+      query: null,
+      activeRouteHandler: handler,
+      key: null
+    };
+
+    reversedArray(matches).forEach(function (match) {
+      var route = match.route;
+
+      props = Route.getUnreservedProps(route.props);
+
+      props.ref = '__activeRoute__';
+      props.params = match.params;
+      props.query = query;
+      props.activeRouteHandler = handler;
+
+      // TODO: Can we remove addHandlerKey?
+      if (route.props.addHandlerKey)
+        props.key = Path.injectParams(route.props.path, match.params);
+
+      handler = function (props, addedProps) {
+        if (arguments.length > 2 && typeof arguments[2] !== 'undefined')
+          throw new Error('Passing children to a route handler is not supported');
+
+        return route.props.handler(
+          copyProperties(props, addedProps)
+        );
+      }.bind(this, props);
+    });
+
+    return props;
+  },
+
+  /**
+   * Returns a reference to the active route handler's component instance.
+   */
+  getActiveComponent: function () {
+    return this.refs.__activeRoute__;
+  },
+
+  /**
+   * Returns the current URL path.
+   */
+  getCurrentPath: function () {
+    return this.state.path;
+  },
+
+  /**
+   * Returns an absolute URL path created from the given route
+   * name, URL parameters, and query values.
+   */
+  makePath: function (to, params, query) {
+    var path;
+    if (Path.isAbsolute(to)) {
+      path = Path.normalize(to);
+    } else {
+      var namedRoutes = this.getNamedRoutes();
+      var route = namedRoutes[to];
+
+      invariant(
+        route,
+        'Unable to find a route named "%s". Make sure you have <Route name="%s"> somewhere in your <Routes>',
+        to, to
+      );
+
+      path = route.props.path;
+    }
+
+    return Path.withQuery(Path.injectParams(path, params), query);
+  },
+
+  /**
+   * Returns a string that may safely be used as the href of a
+   * link to the route with the given name.
+   */
+  makeHref: function (to, params, query) {
+    var path = this.makePath(to, params, query);
+
+    if (this.getLocation() === HashLocation)
+      return '#' + path;
+
+    return path;
+  },
+
+    /**
+   * Transitions to the URL specified in the arguments by pushing
+   * a new URL onto the history stack.
+   */
+  transitionTo: function (to, params, query) {
+    var location = this.getLocation();
+
+    invariant(
+      location,
+      'You cannot use transitionTo without a location'
+    );
+
+    location.push(this.makePath(to, params, query));
+  },
+
+  /**
+   * Transitions to the URL specified in the arguments by replacing
+   * the current URL in the history stack.
+   */
+  replaceWith: function (to, params, query) {
+    var location = this.getLocation();
+
+    invariant(
+      location,
+      'You cannot use replaceWith without a location'
+    );
+
+    location.replace(this.makePath(to, params, query));
+  },
+
+  /**
+   * Transitions to the previous URL.
+   */
+  goBack: function () {
+    var location = this.getLocation();
+
+    invariant(
+      location,
+      'You cannot use goBack without a location'
+    );
+
+    location.pop();
+  },
+
+  /**
+   * Returns true if the given route, params, and query are active.
+   */
+  isActive: function (to, params, query) {
+    if (Path.isAbsolute(to))
+      return to === this.getCurrentPath();
+
+    return routeIsActive(this.getActiveRoutes(), to) &&
+      paramsAreActive(this.getActiveParams(), params) &&
+      (query == null || queryIsActive(this.getActiveQuery(), query));
   },
 
   render: function () {
-    var match = this.getMatch();
-    return match ? React.createElement(match.route.handler, this.props) : null;
+    var match = this.state.matches[0];
+
+    if (match == null)
+      return null;
+
+    return match.route.props.handler(
+      this.getHandlerProps()
+    );
+  },
+
+  childContextTypes: {
+    currentPath: React.PropTypes.string,
+    makePath: React.PropTypes.func.isRequired,
+    makeHref: React.PropTypes.func.isRequired,
+    transitionTo: React.PropTypes.func.isRequired,
+    replaceWith: React.PropTypes.func.isRequired,
+    goBack: React.PropTypes.func.isRequired,
+    isActive: React.PropTypes.func.isRequired
+  },
+
+  getChildContext: function () {
+    return {
+      currentPath: this.getCurrentPath(),
+      makePath: this.makePath,
+      makeHref: this.makeHref,
+      transitionTo: this.transitionTo,
+      replaceWith: this.replaceWith,
+      goBack: this.goBack,
+      isActive: this.isActive
+    };
   }
 
 });
 
-module.exports = RouteHandler;
+module.exports = Routes;
 
-},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/index.js":[function(require,module,exports){
-var Router = require('./Router');
+},{"../locations/HashLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js","../mixins/ActiveContext":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ActiveContext.js","../mixins/LocationContext":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/LocationContext.js","../mixins/RouteContext":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/RouteContext.js","../mixins/ScrollContext":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ScrollContext.js","../utils/Path":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js","../utils/Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Redirect.js","../utils/Transition":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Transition.js","../utils/reversedArray":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/reversedArray.js","./Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/copyProperties":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/copyProperties.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js","react/lib/warning":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/warning.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/index.js":[function(require,module,exports){
+exports.DefaultRoute = require('./components/DefaultRoute');
+exports.Link = require('./components/Link');
+exports.NotFoundRoute = require('./components/NotFoundRoute');
+exports.Redirect = require('./components/Redirect');
+exports.Route = require('./components/Route');
+exports.Routes = require('./components/Routes');
 
-Router.DefaultRoute = require('./components/DefaultRoute');
-Router.Link = require('./components/Link');
-Router.NotFoundRoute = require('./components/NotFoundRoute');
-Router.Redirect = require('./components/Redirect');
-Router.Route = require('./components/Route');
-Router.RouteHandler = require('./components/RouteHandler');
+exports.ActiveState = require('./mixins/ActiveState');
+exports.CurrentPath = require('./mixins/CurrentPath');
+exports.Navigation = require('./mixins/Navigation');
 
-Router.HashLocation = require('./locations/HashLocation');
-Router.HistoryLocation = require('./locations/HistoryLocation');
-Router.RefreshLocation = require('./locations/RefreshLocation');
+exports.renderRoutesToString = require('./utils/ServerRendering').renderRoutesToString;
+exports.renderRoutesToStaticMarkup = require('./utils/ServerRendering').renderRoutesToStaticMarkup;
 
-Router.Navigation = require('./mixins/Navigation');
-Router.State = require('./mixins/State');
-
-module.exports = Router;
-
-},{"./Router":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Router.js","./components/DefaultRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/DefaultRoute.js","./components/Link":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Link.js","./components/NotFoundRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/NotFoundRoute.js","./components/Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Redirect.js","./components/Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","./components/RouteHandler":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/RouteHandler.js","./locations/HashLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js","./locations/HistoryLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HistoryLocation.js","./locations/RefreshLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/RefreshLocation.js","./mixins/Navigation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/Navigation.js","./mixins/State":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/State.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js":[function(require,module,exports){
+},{"./components/DefaultRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/DefaultRoute.js","./components/Link":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Link.js","./components/NotFoundRoute":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/NotFoundRoute.js","./components/Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Redirect.js","./components/Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Route.js","./components/Routes":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Routes.js","./mixins/ActiveState":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ActiveState.js","./mixins/CurrentPath":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/CurrentPath.js","./mixins/Navigation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/Navigation.js","./utils/ServerRendering":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/ServerRendering.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js":[function(require,module,exports){
 var LocationActions = require('../actions/LocationActions');
 var getWindowPath = require('../utils/getWindowPath');
 
@@ -3350,28 +3453,21 @@ function ensureSlash() {
   return false;
 }
 
-var _changeListeners = [];
-
-function notifyChange(type) {
-  var change = {
-    type: type,
-    path: getHashPath()
-  };
-
-  _changeListeners.forEach(function (listener) {
-    listener(change);
-  });
-}
-
-var _isListening = false;
+var _onChange;
 
 function onHashChange() {
   if (ensureSlash()) {
-    // If we don't have an _actionType then all we know is the hash
-    // changed. It was probably caused by the user clicking the Back
-    // button, but may have also been the Forward button or manual
-    // manipulation. So just guess 'pop'.
-    notifyChange(_actionType || LocationActions.POP);
+    var path = getHashPath();
+
+    _onChange({
+      // If we don't have an _actionType then all we know is the hash
+      // changed. It was probably caused by the user clicking the Back
+      // button, but may have also been the Forward button or manual
+      // manipulation. So just guess 'pop'.
+      type: _actionType || LocationActions.POP,
+      path: getHashPath()
+    });
+
     _actionType = null;
   }
 }
@@ -3381,22 +3477,25 @@ function onHashChange() {
  */
 var HashLocation = {
 
-  addChangeListener: function (listener) {
-    _changeListeners.push(listener);
+  setup: function (onChange) {
+    _onChange = onChange;
 
     // Do this BEFORE listening for hashchange.
     ensureSlash();
-
-    if (_isListening)
-      return;
 
     if (window.addEventListener) {
       window.addEventListener('hashchange', onHashChange, false);
     } else {
       window.attachEvent('onhashchange', onHashChange);
     }
+  },
 
-    _isListening = true;
+  teardown: function () {
+    if (window.removeEventListener) {
+      window.removeEventListener('hashchange', onHashChange, false);
+    } else {
+      window.detachEvent('onhashchange', onHashChange);
+    }
   },
 
   push: function (path) {
@@ -3428,23 +3527,13 @@ module.exports = HashLocation;
 var LocationActions = require('../actions/LocationActions');
 var getWindowPath = require('../utils/getWindowPath');
 
-var _changeListeners = [];
-
-function notifyChange(type) {
-  var change = {
-    type: type,
-    path: getWindowPath()
-  };
-
-  _changeListeners.forEach(function (listener) {
-    listener(change);
-  });
-}
-
-var _isListening = false;
+var _onChange;
 
 function onPopState() {
-  notifyChange(LocationActions.POP);
+  _onChange({
+    type: LocationActions.POP,
+    path: getWindowPath()
+  });
 }
 
 /**
@@ -3452,29 +3541,40 @@ function onPopState() {
  */
 var HistoryLocation = {
 
-  addChangeListener: function (listener) {
-    _changeListeners.push(listener);
-
-    if (_isListening)
-      return;
+  setup: function (onChange) {
+    _onChange = onChange;
 
     if (window.addEventListener) {
       window.addEventListener('popstate', onPopState, false);
     } else {
       window.attachEvent('popstate', onPopState);
     }
+  },
 
-    _isListening = true;
+  teardown: function () {
+    if (window.removeEventListener) {
+      window.removeEventListener('popstate', onPopState, false);
+    } else {
+      window.detachEvent('popstate', onPopState);
+    }
   },
 
   push: function (path) {
     window.history.pushState({ path: path }, '', path);
-    notifyChange(LocationActions.PUSH);
+
+    _onChange({
+      type: LocationActions.PUSH,
+      path: getWindowPath()
+    });
   },
 
   replace: function (path) {
     window.history.replaceState({ path: path }, '', path);
-    notifyChange(LocationActions.REPLACE);
+
+    _onChange({
+      type: LocationActions.REPLACE,
+      path: getWindowPath()
+    });
   },
 
   pop: function () {
@@ -3523,67 +3623,281 @@ var RefreshLocation = {
 
 module.exports = RefreshLocation;
 
-},{"../utils/getWindowPath":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/getWindowPath.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ConfigRoute.js":[function(require,module,exports){
+},{"../utils/getWindowPath":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/getWindowPath.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ActiveContext.js":[function(require,module,exports){
 var React = require('react');
-var withoutProperties = require('../utils/withoutProperties');
+var copyProperties = require('react/lib/copyProperties');
 
 /**
- * A map of <Route> component props that are reserved for use by the
- * router and/or React. All other props are considered "static" and
- * are passed through to the route handler.
+ * A mixin for components that store the active state of routes,
+ * URL parameters, and query.
  */
-var RESERVED_PROPS = {
-  handler: true,
-  path: true,
-  defaultRoute: true,
-  notFoundRoute: true,
-  paramNames: true,
-  children: true // ReactChildren
-};
-
-var ConfigRoute = {
+var ActiveContext = {
 
   propTypes: {
-    handler: React.PropTypes.any.isRequired,
-    path: React.PropTypes.string,
-    name: React.PropTypes.string
+    initialActiveRoutes: React.PropTypes.array.isRequired,
+    initialActiveParams: React.PropTypes.object.isRequired,
+    initialActiveQuery: React.PropTypes.object.isRequired
   },
 
-  statics: {
-    getUnreservedProps: function (props) {
-      return withoutProperties(props, RESERVED_PROPS);
-    }
+  getDefaultProps: function () {
+    return {
+      initialActiveRoutes: [],
+      initialActiveParams: {},
+      initialActiveQuery: {}
+    };
   },
 
-  render: function () {
-    throw new Error('Route config components should not be rendered.');
+  getInitialState: function () {
+    return {
+      activeRoutes: this.props.initialActiveRoutes,
+      activeParams: this.props.initialActiveParams,
+      activeQuery: this.props.initialActiveQuery
+    };
+  },
+
+  /**
+   * Returns a read-only array of the currently active routes.
+   */
+  getActiveRoutes: function () {
+    return this.state.activeRoutes.slice(0);
+  },
+
+  /**
+   * Returns a read-only object of the currently active URL parameters.
+   */
+  getActiveParams: function () {
+    return copyProperties({}, this.state.activeParams);
+  },
+
+  /**
+   * Returns a read-only object of the currently active query parameters.
+   */
+  getActiveQuery: function () {
+    return copyProperties({}, this.state.activeQuery);
+  },
+
+  childContextTypes: {
+    activeRoutes: React.PropTypes.array.isRequired,
+    activeParams: React.PropTypes.object.isRequired,
+    activeQuery: React.PropTypes.object.isRequired
+  },
+
+  getChildContext: function () {
+    return {
+      activeRoutes: this.getActiveRoutes(),
+      activeParams: this.getActiveParams(),
+      activeQuery: this.getActiveQuery()
+    };
   }
 
 };
 
-module.exports = ConfigRoute;
+module.exports = ActiveContext;
 
+},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/copyProperties":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/copyProperties.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ActiveState.js":[function(require,module,exports){
+var React = require('react');
 
-},{"../utils/withoutProperties":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/withoutProperties.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/Navigation.js":[function(require,module,exports){
+/**
+ * A mixin for components that need to know the routes, URL
+ * params and query that are currently active.
+ *
+ * Example:
+ *
+ *   var AboutLink = React.createClass({
+ *     mixins: [ Router.ActiveState ],
+ *     render: function () {
+ *       var className = this.props.className;
+ *   
+ *       if (this.isActive('about'))
+ *         className += ' is-active';
+ *   
+ *       return React.DOM.a({ className: className }, this.props.children);
+ *     }
+ *   });
+ */
+var ActiveState = {
+
+  contextTypes: {
+    activeRoutes: React.PropTypes.array.isRequired,
+    activeParams: React.PropTypes.object.isRequired,
+    activeQuery: React.PropTypes.object.isRequired,
+    isActive: React.PropTypes.func.isRequired
+  },
+
+  /**
+   * Returns an array of the routes that are currently active.
+   */
+  getActiveRoutes: function () {
+    return this.context.activeRoutes;
+  },
+
+  /**
+   * Returns an object of the URL params that are currently active.
+   */
+  getActiveParams: function () {
+    return this.context.activeParams;
+  },
+
+  /**
+   * Returns an object of the query params that are currently active.
+   */
+  getActiveQuery: function () {
+    return this.context.activeQuery;
+  },
+
+  /**
+   * A helper method to determine if a given route, params, and query
+   * are active.
+   */
+  isActive: function (to, params, query) {
+    return this.context.isActive(to, params, query);
+  }
+
+};
+
+module.exports = ActiveState;
+
+},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/CurrentPath.js":[function(require,module,exports){
+var React = require('react');
+
+/**
+ * A mixin for components that need to know the current URL path.
+ *
+ * Example:
+ *
+ *   var ShowThePath = React.createClass({
+ *     mixins: [ Router.CurrentPath ],
+ *     render: function () {
+ *       return (
+ *         <div>The current path is: {this.getCurrentPath()}</div>
+ *       );
+ *     }
+ *   });
+ */
+var CurrentPath = {
+
+  contextTypes: {
+    currentPath: React.PropTypes.string.isRequired
+  },
+
+  /**
+   * Returns the current URL path.
+   */
+  getCurrentPath: function () {
+    return this.context.currentPath;
+  }
+
+};
+
+module.exports = CurrentPath;
+
+},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/LocationContext.js":[function(require,module,exports){
+var React = require('react');
+var invariant = require('react/lib/invariant');
+var canUseDOM = require('react/lib/ExecutionEnvironment').canUseDOM;
+var HashLocation = require('../locations/HashLocation');
+var HistoryLocation = require('../locations/HistoryLocation');
+var RefreshLocation = require('../locations/RefreshLocation');
+var PathStore = require('../stores/PathStore');
+var supportsHistory = require('../utils/supportsHistory');
+
+/**
+ * A hash of { name: location } pairs.
+ */
+var NAMED_LOCATIONS = {
+  none: null,
+  hash: HashLocation,
+  history: HistoryLocation,
+  refresh: RefreshLocation
+};
+
+/**
+ * A mixin for components that manage location.
+ */
+var LocationContext = {
+
+  propTypes: {
+    location: function (props, propName, componentName) {
+      var location = props[propName];
+
+      if (typeof location === 'string' && !(location in NAMED_LOCATIONS))
+        return new Error('Unknown location "' + location + '", see ' + componentName);
+    }
+  },
+
+  getDefaultProps: function () {
+    return {
+      location: canUseDOM ? HashLocation : null
+    };
+  },
+
+  componentWillMount: function () {
+    var location = this.getLocation();
+
+    invariant(
+      location == null || canUseDOM,
+      'Cannot use location without a DOM'
+    );
+
+    if (location) {
+      PathStore.setup(location);
+      PathStore.addChangeListener(this.handlePathChange);
+
+      if (this.updateLocation)
+        this.updateLocation(PathStore.getCurrentPath(), PathStore.getCurrentActionType());
+    }
+  },
+
+  componentWillUnmount: function () {
+    if (this.getLocation())
+      PathStore.removeChangeListener(this.handlePathChange);
+  },
+
+  handlePathChange: function () {
+    if (this.updateLocation)
+      this.updateLocation(PathStore.getCurrentPath(), PathStore.getCurrentActionType());
+  },
+
+  /**
+   * Returns the location object this component uses.
+   */
+  getLocation: function () {
+    if (this._location == null) {
+      var location = this.props.location;
+
+      if (typeof location === 'string')
+        location = NAMED_LOCATIONS[location];
+
+      // Automatically fall back to full page refreshes in
+      // browsers that do not support HTML5 history.
+      if (location === HistoryLocation && !supportsHistory())
+        location = RefreshLocation;
+
+      this._location = location;
+    }
+
+    return this._location;
+  },
+
+  childContextTypes: {
+    location: React.PropTypes.object // Not required on the server.
+  },
+
+  getChildContext: function () {
+    return {
+      location: this.getLocation()
+    };
+  }
+
+};
+
+module.exports = LocationContext;
+
+},{"../locations/HashLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js","../locations/HistoryLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HistoryLocation.js","../locations/RefreshLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/RefreshLocation.js","../stores/PathStore":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/stores/PathStore.js","../utils/supportsHistory":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/supportsHistory.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/ExecutionEnvironment":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/Navigation.js":[function(require,module,exports){
 var React = require('react');
 
 /**
  * A mixin for components that modify the URL.
- *
- * Example:
- *
- *   var MyLink = React.createClass({
- *     mixins: [ Router.Navigation ],
- *     handleClick: function (event) {
- *       event.preventDefault();
- *       this.transitionTo('aRoute', { the: 'params' }, { the: 'query' });
- *     },
- *     render: function () {
- *       return (
- *         <a onClick={this.handleClick}>Click me!</a>
- *       );
- *     }
- *   });
  */
 var Navigation = {
 
@@ -3638,78 +3952,387 @@ var Navigation = {
 
 module.exports = Navigation;
 
-},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/State.js":[function(require,module,exports){
+},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/RouteContext.js":[function(require,module,exports){
 var React = require('react');
+var invariant = require('react/lib/invariant');
+var Path = require('../utils/Path');
 
 /**
- * A mixin for components that need to know the path, routes, URL
- * params and query that are currently active.
- *
- * Example:
- *
- *   var AboutLink = React.createClass({
- *     mixins: [ Router.State ],
- *     render: function () {
- *       var className = this.props.className;
- *   
- *       if (this.isActive('about'))
- *         className += ' is-active';
- *   
- *       return React.DOM.a({ className: className }, this.props.children);
- *     }
- *   });
+ * Performs some normalization and validation on a <Route> component and
+ * all of its children.
  */
-var State = {
+function processRoute(route, container, namedRoutes) {
+  // Note: parentRoute may be a <Route> _or_ a <Routes>.
+  var props = route.props;
 
-  contextTypes: {
-    currentPath: React.PropTypes.string.isRequired,
-    currentRoutes: React.PropTypes.array.isRequired,
-    currentParams: React.PropTypes.object.isRequired,
-    currentQuery: React.PropTypes.object.isRequired,
-    isActive: React.PropTypes.func.isRequired
+  // TODO: use isValidElement when we update everything for React 0.12
+  //invariant(
+    //React.isValidClass(props.handler),
+    //'The handler for the "%s" route must be a valid React class',
+    //props.name || props.path
+  //);
+
+  var parentPath = (container && container.props.path) || '/';
+
+  if ((props.path || props.name) && !props.isDefault && !props.catchAll) {
+    var path = props.path || props.name;
+
+    // Relative paths extend their parent.
+    if (!Path.isAbsolute(path))
+      path = Path.join(parentPath, path);
+
+    props.path = Path.normalize(path);
+  } else {
+    props.path = parentPath;
+
+    if (props.catchAll)
+      props.path += '*';
+  }
+
+  props.paramNames = Path.extractParamNames(props.path);
+
+  // Make sure the route's path has all params its parent needs.
+  if (container && Array.isArray(container.props.paramNames)) {
+    container.props.paramNames.forEach(function (paramName) {
+      invariant(
+        props.paramNames.indexOf(paramName) !== -1,
+        'The nested route path "%s" is missing the "%s" parameter of its parent path "%s"',
+        props.path, paramName, container.props.path
+      );
+    });
+  }
+
+  // Make sure the route can be looked up by <Link>s.
+  if (props.name) {
+    var existingRoute = namedRoutes[props.name];
+
+    invariant(
+      !existingRoute || route === existingRoute,
+      'You cannot use the name "%s" for more than one route',
+      props.name
+    );
+
+    namedRoutes[props.name] = route;
+  }
+
+  // Handle <NotFoundRoute>.
+  if (props.catchAll) {
+    invariant(
+      container,
+      '<NotFoundRoute> must have a parent <Route>'
+    );
+
+    invariant(
+      container.props.notFoundRoute == null,
+      'You may not have more than one <NotFoundRoute> per <Route>'
+    );
+
+    container.props.notFoundRoute = route;
+
+    return null;
+  }
+
+  // Handle <DefaultRoute>.
+  if (props.isDefault) {
+    invariant(
+      container,
+      '<DefaultRoute> must have a parent <Route>'
+    );
+
+    invariant(
+      container.props.defaultRoute == null,
+      'You may not have more than one <DefaultRoute> per <Route>'
+    );
+
+    container.props.defaultRoute = route;
+
+    return null;
+  }
+
+  // Make sure children is an array.
+  props.children = processRoutes(props.children, route, namedRoutes);
+
+  return route;
+}
+
+/**
+ * Processes many children <Route>s at once, always returning an array.
+ */
+function processRoutes(children, container, namedRoutes) {
+  var routes = [];
+
+  React.Children.forEach(children, function (child) {
+    // Exclude <DefaultRoute>s and <NotFoundRoute>s.
+    if (child = processRoute(child, container, namedRoutes))
+      routes.push(child);
+  });
+
+  return routes;
+}
+
+/**
+ * A mixin for components that have <Route> children.
+ */
+var RouteContext = {
+
+  _processRoutes: function () {
+    this._namedRoutes = {};
+    this._routes = processRoutes(this.props.children, this, this._namedRoutes);
+  },
+
+  /**
+   * Returns an array of <Route>s in this container.
+   */
+  getRoutes: function () {
+    if (this._routes == null)
+      this._processRoutes();
+
+    return this._routes;
+  },
+
+  /**
+   * Returns a hash { name: route } of all named <Route>s in this container.
+   */
+  getNamedRoutes: function () {
+    if (this._namedRoutes == null)
+      this._processRoutes();
+
+    return this._namedRoutes;
+  },
+
+  /**
+   * Returns the route with the given name.
+   */
+  getRouteByName: function (routeName) {
+    var namedRoutes = this.getNamedRoutes();
+    return namedRoutes[routeName] || null;
+  },
+
+  childContextTypes: {
+    routes: React.PropTypes.array.isRequired,
+    namedRoutes: React.PropTypes.object.isRequired
+  },
+
+  getChildContext: function () {
+    return {
+      routes: this.getRoutes(),
+      namedRoutes: this.getNamedRoutes(),
+    };
+  }
+
+};
+
+module.exports = RouteContext;
+
+},{"../utils/Path":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/mixins/ScrollContext.js":[function(require,module,exports){
+var React = require('react');
+var invariant = require('react/lib/invariant');
+var canUseDOM = require('react/lib/ExecutionEnvironment').canUseDOM;
+var ImitateBrowserBehavior = require('../behaviors/ImitateBrowserBehavior');
+var ScrollToTopBehavior = require('../behaviors/ScrollToTopBehavior');
+
+function getWindowScrollPosition() {
+  invariant(
+    canUseDOM,
+    'Cannot get current scroll position without a DOM'
+  );
+
+  return {
+    x: window.scrollX,
+    y: window.scrollY
+  };
+}
+
+/**
+ * A hash of { name: scrollBehavior } pairs.
+ */
+var NAMED_SCROLL_BEHAVIORS = {
+  none: null,
+  browser: ImitateBrowserBehavior,
+  imitateBrowser: ImitateBrowserBehavior,
+  scrollToTop: ScrollToTopBehavior
+};
+
+/**
+ * A mixin for components that manage scroll position.
+ */
+var ScrollContext = {
+
+  propTypes: {
+    scrollBehavior: function (props, propName, componentName) {
+      var behavior = props[propName];
+
+      if (typeof behavior === 'string' && !(behavior in NAMED_SCROLL_BEHAVIORS))
+        return new Error('Unknown scroll behavior "' + behavior + '", see ' + componentName);
+    }
+  },
+
+  getDefaultProps: function () {
+    return {
+      scrollBehavior: canUseDOM ? ImitateBrowserBehavior : null
+    };
+  },
+
+  componentWillMount: function () {
+    invariant(
+      this.getScrollBehavior() == null || canUseDOM,
+      'Cannot use scroll behavior without a DOM'
+    );
+  },
+
+  recordScroll: function (path) {
+    var positions = this.getScrollPositions();
+    positions[path] = getWindowScrollPosition();
+  },
+
+  updateScroll: function (path, actionType) {
+    var behavior = this.getScrollBehavior();
+    var position = this.getScrollPosition(path) || null;
+
+    if (behavior)
+      behavior.updateScrollPosition(position, actionType);
+  },
+
+  /**
+   * Returns the scroll behavior object this component uses.
+   */
+  getScrollBehavior: function () {
+    if (this._scrollBehavior == null) {
+      var behavior = this.props.scrollBehavior;
+
+      if (typeof behavior === 'string')
+        behavior = NAMED_SCROLL_BEHAVIORS[behavior];
+
+      this._scrollBehavior = behavior;
+    }
+
+    return this._scrollBehavior;
+  },
+
+  /**
+   * Returns a hash of URL paths to their last known scroll positions.
+   */
+  getScrollPositions: function () {
+    if (this._scrollPositions == null)
+      this._scrollPositions = {};
+
+    return this._scrollPositions;
+  },
+
+  /**
+   * Returns the last known scroll position for the given URL path.
+   */
+  getScrollPosition: function (path) {
+    var positions = this.getScrollPositions();
+    return positions[path];
+  },
+
+  childContextTypes: {
+    scrollBehavior: React.PropTypes.object // Not required on the server.
+  },
+
+  getChildContext: function () {
+    return {
+      scrollBehavior: this.getScrollBehavior()
+    };
+  }
+
+};
+
+module.exports = ScrollContext;
+
+},{"../behaviors/ImitateBrowserBehavior":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/behaviors/ImitateBrowserBehavior.js","../behaviors/ScrollToTopBehavior":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/behaviors/ScrollToTopBehavior.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/ExecutionEnvironment":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/stores/PathStore.js":[function(require,module,exports){
+var invariant = require('react/lib/invariant');
+var EventEmitter = require('events').EventEmitter;
+var LocationActions = require('../actions/LocationActions');
+
+var CHANGE_EVENT = 'change';
+var _events = new EventEmitter;
+
+function notifyChange() {
+  _events.emit(CHANGE_EVENT);
+}
+
+var _currentLocation, _currentActionType;
+var _currentPath = '/';
+
+function handleLocationChangeAction(action) {
+  if (_currentPath !== action.path) {
+    _currentPath = action.path;
+    _currentActionType = action.type;
+    notifyChange();
+  }
+}
+
+/**
+ * The PathStore keeps track of the current URL path.
+ */
+var PathStore = {
+
+  addChangeListener: function (listener) {
+    _events.addListener(CHANGE_EVENT, listener);
+  },
+
+  removeChangeListener: function (listener) {
+    _events.removeListener(CHANGE_EVENT, listener);
+  },
+
+  removeAllChangeListeners: function () {
+    _events.removeAllListeners(CHANGE_EVENT);
+  },
+
+  /**
+   * Setup the PathStore to use the given location.
+   */
+  setup: function (location) {
+    invariant(
+      _currentLocation == null || _currentLocation === location,
+      'You cannot use %s and %s on the same page',
+      _currentLocation, location
+    );
+
+    if (_currentLocation !== location) {
+      if (location.setup)
+        location.setup(handleLocationChangeAction);
+
+      _currentPath = location.getCurrentPath();
+    }
+
+    _currentLocation = location;
+  },
+
+  /**
+   * Tear down the PathStore. Really only used for testing.
+   */
+  teardown: function () {
+    if (_currentLocation && _currentLocation.teardown)
+      _currentLocation.teardown();
+
+    _currentLocation = _currentActionType = null;
+    _currentPath = '/';
+
+    PathStore.removeAllChangeListeners();
   },
 
   /**
    * Returns the current URL path.
    */
-  getPath: function () {
-    return this.context.currentPath;
+  getCurrentPath: function () {
+    return _currentPath;
   },
 
   /**
-   * Returns an array of the routes that are currently active.
+   * Returns the type of the action that changed the URL.
    */
-  getRoutes: function () {
-    return this.context.currentRoutes;
-  },
-
-  /**
-   * Returns an object of the URL params that are currently active.
-   */
-  getParams: function () {
-    return this.context.currentParams;
-  },
-
-  /**
-   * Returns an object of the query params that are currently active.
-   */
-  getQuery: function () {
-    return this.context.currentQuery;
-  },
-
-  /**
-   * A helper method to determine if a given route, params, and query
-   * are active.
-   */
-  isActive: function (to, params, query) {
-    return this.context.isActive(to, params, query);
+  getCurrentActionType: function () {
+    return _currentActionType;
   }
 
 };
 
-module.exports = State;
+module.exports = PathStore;
 
-},{"react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js":[function(require,module,exports){
+},{"../actions/LocationActions":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/actions/LocationActions.js","events":"/Users/kenwheeler/Projects/app-template/node_modules/browserify/node_modules/events/events.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js":[function(require,module,exports){
 var invariant = require('react/lib/invariant');
 var merge = require('qs/lib/utils').merge;
 var qs = require('qs');
@@ -3907,432 +4530,163 @@ function Redirect(to, params, query) {
 
 module.exports = Redirect;
 
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/createRouteHandler.js":[function(require,module,exports){
-var React = require('react');
-var assign = require('react/lib/Object.assign');
-var invariant = require('react/lib/invariant');
-var RouteHandler = require('../components/RouteHandler');
-var HashLocation = require('../locations/HashLocation');
-var Route = require('../Route');
-var Match = require('../Match');
-var Path = require('./Path');
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/ServerRendering.js":[function(require,module,exports){
+var ReactElement = require('react/lib/ReactElement');
+var ReactInstanceHandles = require('react/lib/ReactInstanceHandles');
+var ReactMarkupChecksum = require('react/lib/ReactMarkupChecksum');
+var ReactServerRenderingTransaction = require('react/lib/ReactServerRenderingTransaction');
 
-function routeIsActive(activeRoutes, routeName) {
-  return activeRoutes.some(function (route) {
-    return route.name === routeName;
+var cloneWithProps = require('react/lib/cloneWithProps');
+var copyProperties = require('react/lib/copyProperties');
+var instantiateReactComponent = require('react/lib/instantiateReactComponent');
+var invariant = require('react/lib/invariant');
+
+function cloneRoutesForServerRendering(routes) {
+  return cloneWithProps(routes, {
+    location: 'none',
+    scrollBehavior: 'none'
   });
 }
 
-function paramsAreActive(activeParams, params) {
-  for (var property in params)
-    if (String(activeParams[property]) !== String(params[property]))
-      return false;
-
-  return true;
-}
-
-function queryIsActive(activeQuery, query) {
-  for (var property in query)
-    if (String(activeQuery[property]) !== String(query[property]))
-      return false;
-
-  return true;
-}
-
-/**
- * Returns a React class that can be used to render the current state of
- * the given Router.
- */
-function createRouteHandler(router, location) {
-  var LocationContext = {
-
-    /**
-     * Returns the location (static or dynamic) that is in use.
-     */
-    getLocation: function () {
-      return location;
-    },
-
-    childContextTypes: {
-      location: React.PropTypes.oneOfType([
-        React.PropTypes.string,
-        React.PropTypes.object
-      ]).isRequired
-    },
-
-    getChildContext: function () {
-      // TODO: move this somewhere better? it was in the `render` method but
-      // context all gets setup before render is called, so this is our chance to
-      // flip the switch
-      router.flipSwitch();
-
-      return {
-        location: this.getLocation()
-      };
-    }
-
-  };
-
-  var StateContext = {
-
-    /**
-     * Returns the current URL path + query string.
-     */
-    getCurrentPath: function () {
-      return router.state.path;
-    },
-
-    /**
-     * Returns a read-only array of the currently active routes.
-     */
-    getCurrentRoutes: function () {
-      return router.state.routes.slice(0);
-    },
-
-    /**
-     * Returns a read-only object of the currently active URL parameters.
-     */
-    getCurrentParams: function () {
-      return assign({}, router.state.params);
-    },
-
-    /**
-     * Returns a read-only object of the currently active query parameters.
-     */
-    getCurrentQuery: function () {
-      return assign({}, router.state.query);
-    },
-
-    /**
-     * Returns true if the given route, params, and query are active.
-     */
-    isActive: function (to, params, query) {
-      if (Path.isAbsolute(to))
-        return to === router.state.path;
-
-      return routeIsActive(router.state.routes, to) &&
-        paramsAreActive(router.state.params, params) &&
-        (query == null || queryIsActive(router.state.query, query));
-    },
-
-    childContextTypes: {
-      currentPath: React.PropTypes.string.isRequired,
-      currentRoutes: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Route)).isRequired,
-      currentParams: React.PropTypes.object.isRequired,
-      currentQuery: React.PropTypes.object.isRequired,
-      isActive: React.PropTypes.func.isRequired
-    },
-
-    getChildContext: function () {
-      return {
-        currentPath: this.getCurrentPath(),
-        currentRoutes: this.getCurrentRoutes(),
-        currentParams: this.getCurrentParams(),
-        currentQuery: this.getCurrentQuery(),
-        isActive: this.isActive
-      };
-    }
-
-  };
-
-  var NavigationContext = {
-
-    /**
-     * Returns an absolute URL path created from the given route
-     * name, URL parameters, and query.
-     */
-    makePath: function (to, params, query) {
-      return router.makePath(to, params, query);
-    },
-
-    /**
-     * Returns a string that may safely be used as the href of a link
-     * to the route with the given name, URL parameters, and query.
-     */
-    makeHref: function (to, params, query) {
-      var path = this.makePath(to, params, query);
-      return (location === HashLocation) ? '#' + path : path;
-    },
-
-    /**
-     * Transitions to the URL specified in the arguments by pushing
-     * a new URL onto the history stack.
-     */
-    transitionTo: function (to, params, query) {
-      invariant(
-        typeof location !== 'string',
-        'You cannot use transitionTo with a static location'
-      );
-
-      location.push(this.makePath(to, params, query));
-    },
-
-    /**
-     * Transitions to the URL specified in the arguments by replacing
-     * the current URL in the history stack.
-     */
-    replaceWith: function (to, params, query) {
-      invariant(
-        typeof location !== 'string',
-        'You cannot use replaceWith with a static location'
-      );
-
-      location.replace(this.makePath(to, params, query));
-    },
-
-    /**
-     * Transitions to the previous URL.
-     */
-    goBack: function () {
-      invariant(
-        typeof location !== 'string',
-        'You cannot use goBack with a static location'
-      );
-
-      location.pop();
-    },
-
-    childContextTypes: {
-      makePath: React.PropTypes.func.isRequired,
-      makeHref: React.PropTypes.func.isRequired,
-      transitionTo: React.PropTypes.func.isRequired,
-      replaceWith: React.PropTypes.func.isRequired,
-      goBack: React.PropTypes.func.isRequired
-    },
-
-    getChildContext: function () {
-      return {
-        makePath: this.makePath,
-        makeHref: this.makeHref,
-        transitionTo: this.transitionTo,
-        replaceWith: this.replaceWith,
-        goBack: this.goBack
-      };
-    }
-
-  };
-
-  var RouteHandlerContext = {
-
-    componentWillMount: function () {
-      this._routeHandlerElements = [];
-    },
-
-    registerRouteHandlerElement: function (element) {
-      var elements = this._routeHandlerElements;
-
-      invariant(
-        !elements.some(function (el) {
-          return el._owner === element._owner
-        }),
-        'Using <RouteHandler> twice in the same render method is not allowed'
-      );
-
-      elements.push(element);
-
-      return elements.length - 1;
-    },
-
-    unregisterRouteHandlerElement: function (element) {
-      var elements = this._routeHandlerElements;
-
-      // We're assuming that elements are unmounted starting
-      // at children. If that is incorrect, we need to revise.
-
-      // TODO: Put this inside a __DEV__ guard. Right
-      // now it's just a sanity check.
-      invariant(
-        elements[elements.length - 1] === element,
-        'The <RouteHandler> stack is corrupt'
-      );
-
-      elements.pop();
-    },
-
-    getRouteMatchAtDepth: function (depth) {
-      return router.state.matches[depth];
-    },
-
-    childContextTypes: {
-      registerRouteHandlerElement: React.PropTypes.func.isRequired,
-      unregisterRouteHandlerElement: React.PropTypes.func.isRequired,
-      getRouteMatchAtDepth: React.PropTypes.func.isRequired
-    },
-
-    getChildContext: function () {
-      return {
-        registerRouteHandlerElement: this.registerRouteHandlerElement,
-        unregisterRouteHandlerElement: this.unregisterRouteHandlerElement,
-        getRouteMatchAtDepth: this.getRouteMatchAtDepth
-      };
-    }
-
-  };
-
-  return React.createClass({
-
-    displayName: 'RouteHandler',
-
-    mixins: [ LocationContext, StateContext, NavigationContext, RouteHandlerContext ],
-
-    propTypes: {
-      children: function (props, propName, componentName) {
-        if (props[propName] != null)
-          return new Error('You cannot pass children to a RouteHandler');
-      }
-    },
-
-    render: function () {
-      var route = router.state.routes[0];
-      return route ? React.createElement(RouteHandler, this.props) : null;
-    }
-
+function mergeStateIntoInitialProps(state, props) {
+  copyProperties(props, {
+    initialPath: state.path,
+    initialMatches: state.matches,
+    initialActiveRoutes: state.activeRoutes,
+    initialActiveParams: state.activeParams,
+    initialActiveQuery: state.activeQuery
   });
 }
 
-module.exports = createRouteHandler;
-
-},{"../Match":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Match.js","../Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Route.js","../components/RouteHandler":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/RouteHandler.js","../locations/HashLocation":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/locations/HashLocation.js","./Path":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/Object.assign":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/Object.assign.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/createRoutesFromChildren.js":[function(require,module,exports){
-var React = require('react');
-var invariant = require('react/lib/invariant');
-var RedirectComponent = require('../components/Redirect');
-var Route = require('../Route');
-var Redirect = require('./Redirect');
-var Path = require('./Path');
-
 /**
- * Performs some normalization and validation on a <Route> component and
- * all of its children.
+ * Renders a <Routes> component to a string of HTML at the given URL
+ * path and calls callback(error, abortReason, html) when finished.
+ *
+ * If there was an error during the transition, it is passed to the
+ * callback. Otherwise, if the transition was aborted for some reason,
+ * it is given in the abortReason argument (with the exception of
+ * internal redirects which are transparently handled for you).
+ *
+ * TODO: <NotFoundRoute> should be handled specially so servers know
+ * to use a 404 status code.
  */
-function processRoute(component, parentRoute, namedRoutes) {
-  if (component.props.isRedirect)
-    component = RedirectComponent.createRoute(component.props);
-
-  var props = component.props;
-
+function renderRoutesToString(routes, path, callback) {
   invariant(
-    typeof props.handler === 'function',
-    'The handler for the "%s" route must be a React component class',
-    props.name || props.path
+    ReactElement.isValidElement(routes),
+    'You must pass a valid ReactComponent to renderRoutesToString'
   );
 
-  var route = new Route(props.handler, props.name);
-  var parentPath = (parentRoute && parentRoute.path) || '/';
+  var component = instantiateReactComponent(
+    cloneRoutesForServerRendering(routes)
+  );
 
-  if ((props.path || props.name) && !props.isDefault && !props.catchAll) {
-    var path = props.path || props.name;
+  component.dispatch(path, function (error, abortReason, nextState) {
+    if (error || abortReason)
+      return callback(error, abortReason);
 
-    // Relative paths extend their parent.
-    if (!Path.isAbsolute(path))
-      path = Path.join(parentPath, path);
+    mergeStateIntoInitialProps(nextState, component.props);
 
-    route.path = Path.normalize(path);
-  } else {
-    route.path = parentPath;
+    var transaction;
+    try {
+      var id = ReactInstanceHandles.createReactRootID();
+      transaction = ReactServerRenderingTransaction.getPooled(false);
 
-    if (props.catchAll)
-      route.path += '*';
-  }
-
-  route.paramNames = Path.extractParamNames(route.path);
-
-  // Make sure the route's path has all params its parent needs.
-  if (parentRoute && Array.isArray(parentRoute.paramNames)) {
-    parentRoute.paramNames.forEach(function (paramName) {
-      invariant(
-        route.paramNames.indexOf(paramName) !== -1,
-        'The nested route path "%s" is missing the "%s" parameter of its parent path "%s"',
-        route.path, paramName, parentRoute.path
-      );
-    });
-  }
-
-  // Make sure the route can be looked up by <Link>s.
-  if (props.name) {
-    invariant(
-      namedRoutes[props.name] == null,
-      'You cannot use the name "%s" for more than one route',
-      props.name
-    );
-
-    namedRoutes[props.name] = route;
-  }
-
-  // Handle <NotFoundRoute>.
-  if (props.catchAll) {
-    invariant(
-      parentRoute,
-      '<NotFoundRoute> must have a parent <Route>'
-    );
-
-    invariant(
-      parentRoute.notFoundRoute == null,
-      'You may not have more than one <NotFoundRoute> per <Route>'
-    );
-
-    parentRoute.notFoundRoute = route;
-
-    return null;
-  }
-
-  // Handle <DefaultRoute>.
-  if (props.isDefault) {
-    invariant(
-      parentRoute,
-      '<DefaultRoute> must have a parent <Route>'
-    );
-
-    invariant(
-      parentRoute.defaultRoute == null,
-      'You may not have more than one <DefaultRoute> per <Route>'
-    );
-
-    parentRoute.defaultRoute = route;
-
-    return null;
-  }
-
-  route.childRoutes = createRoutesFromChildren(props.children, route, namedRoutes);
-
-  return route;
+      transaction.perform(function () {
+        var markup = component.mountComponent(id, transaction, 0);
+        callback(null, null, ReactMarkupChecksum.addChecksumToMarkup(markup));
+      }, null);
+    } finally {
+      ReactServerRenderingTransaction.release(transaction);
+    }
+  });
 }
 
 /**
- * Processes many children <Route>s at once, always returning an array.
+ * Renders a <Routes> component to static markup at the given URL
+ * path and calls callback(error, abortReason, markup) when finished.
  */
-function createRoutesFromChildren(children, parentRoute, namedRoutes) {
-  var routes = [];
+function renderRoutesToStaticMarkup(routes, path, callback) {
+  invariant(
+    ReactElement.isValidElement(routes),
+    'You must pass a valid ReactComponent to renderRoutesToStaticMarkup'
+  );
 
-  React.Children.forEach(children, function (child) {
-    // Exclude <DefaultRoute>s and <NotFoundRoute>s.
-    if (child = processRoute(child, parentRoute, namedRoutes))
-      routes.push(child);
+  var component = instantiateReactComponent(
+    cloneRoutesForServerRendering(routes)
+  );
+
+  component.dispatch(path, function (error, abortReason, nextState) {
+    if (error || abortReason)
+      return callback(error, abortReason);
+
+    mergeStateIntoInitialProps(nextState, component.props);
+
+    var transaction;
+    try {
+      var id = ReactInstanceHandles.createReactRootID();
+      transaction = ReactServerRenderingTransaction.getPooled(false);
+
+      transaction.perform(function () {
+        callback(null, null, component.mountComponent(id, transaction, 0));
+      }, null);
+    } finally {
+      ReactServerRenderingTransaction.release(transaction);
+    }
   });
-
-  return routes;
 }
 
-module.exports = createRoutesFromChildren;
+module.exports = {
+  renderRoutesToString: renderRoutesToString,
+  renderRoutesToStaticMarkup: renderRoutesToStaticMarkup
+};
 
-},{"../Route":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/Route.js","../components/Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/components/Redirect.js","./Path":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Path.js","./Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Redirect.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/getWindowPath.js":[function(require,module,exports){
-var invariant = require('react/lib/invariant');
-var canUseDOM = require('react/lib/ExecutionEnvironment').canUseDOM;
+},{"react/lib/ReactElement":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ReactElement.js","react/lib/ReactInstanceHandles":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ReactInstanceHandles.js","react/lib/ReactMarkupChecksum":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ReactMarkupChecksum.js","react/lib/ReactServerRenderingTransaction":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ReactServerRenderingTransaction.js","react/lib/cloneWithProps":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/cloneWithProps.js","react/lib/copyProperties":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/copyProperties.js","react/lib/instantiateReactComponent":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/instantiateReactComponent.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Transition.js":[function(require,module,exports){
+var Promise = require('./Promise');
+var Redirect = require('./Redirect');
 
+/**
+ * Encapsulates a transition to a given path.
+ *
+ * The willTransitionTo and willTransitionFrom handlers receive
+ * an instance of this class as their first argument.
+ */
+function Transition(routesComponent, path) {
+  this.routesComponent = routesComponent;
+  this.path = path;
+  this.abortReason = null;
+  this.isAborted = false;
+}
+
+Transition.prototype.abort = function (reason) {
+  this.abortReason = reason;
+  this.isAborted = true;
+};
+
+Transition.prototype.redirect = function (to, params, query) {
+  this.abort(new Redirect(to, params, query));
+};
+
+Transition.prototype.wait = function (value) {
+  this.promise = Promise.resolve(value);
+};
+
+Transition.prototype.retry = function () {
+  this.routesComponent.replaceWith(this.path);
+};
+
+module.exports = Transition;
+
+},{"./Promise":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Promise.js","./Redirect":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/Redirect.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/getWindowPath.js":[function(require,module,exports){
 /**
  * Returns the current URL path from `window.location`, including query string
  */
 function getWindowPath() {
-  invariant(
-    canUseDOM,
-    'Cannot get current path without a DOM'
-  );
-
   return window.location.pathname + window.location.search;
 }
 
 module.exports = getWindowPath;
 
-},{"react/lib/ExecutionEnvironment":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ExecutionEnvironment.js","react/lib/invariant":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/invariant.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/reversedArray.js":[function(require,module,exports){
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/utils/reversedArray.js":[function(require,module,exports){
 function reversedArray(array) {
   return array.slice(0).reverse();
 }
@@ -21598,7 +21952,66 @@ function camelizeStyleName(string) {
 
 module.exports = camelizeStyleName;
 
-},{"./camelize":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/camelize.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/containsNode.js":[function(require,module,exports){
+},{"./camelize":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/camelize.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/cloneWithProps.js":[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ * @providesModule cloneWithProps
+ */
+
+"use strict";
+
+var ReactElement = require("./ReactElement");
+var ReactPropTransferer = require("./ReactPropTransferer");
+
+var keyOf = require("./keyOf");
+var warning = require("./warning");
+
+var CHILDREN_PROP = keyOf({children: null});
+
+/**
+ * Sometimes you want to change the props of a child passed to you. Usually
+ * this is to add a CSS class.
+ *
+ * @param {object} child child component you'd like to clone
+ * @param {object} props props you'd like to modify. They will be merged
+ * as if you used `transferPropsTo()`.
+ * @return {object} a clone of child with props merged in.
+ */
+function cloneWithProps(child, props) {
+  if ("production" !== process.env.NODE_ENV) {
+    ("production" !== process.env.NODE_ENV ? warning(
+      !child.ref,
+      'You are calling cloneWithProps() on a child with a ref. This is ' +
+      'dangerous because you\'re creating a new child which will not be ' +
+      'added as a ref to its parent.'
+    ) : null);
+  }
+
+  var newProps = ReactPropTransferer.mergeProps(props, child.props);
+
+  // Use `child.props.children` if it is provided.
+  if (!newProps.hasOwnProperty(CHILDREN_PROP) &&
+      child.props.hasOwnProperty(CHILDREN_PROP)) {
+    newProps.children = child.props.children;
+  }
+
+  // The current API doesn't retain _owner and _context, which is why this
+  // doesn't use ReactElement.cloneAndReplaceProps.
+  return ReactElement.createElement(child.type, newProps);
+}
+
+module.exports = cloneWithProps;
+
+}).call(this,require('_process'))
+},{"./ReactElement":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ReactElement.js","./ReactPropTransferer":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/ReactPropTransferer.js","./keyOf":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/keyOf.js","./warning":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/warning.js","_process":"/Users/kenwheeler/Projects/app-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/containsNode.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -21642,7 +22055,65 @@ function containsNode(outerNode, innerNode) {
 
 module.exports = containsNode;
 
-},{"./isTextNode":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/isTextNode.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/createArrayFrom.js":[function(require,module,exports){
+},{"./isTextNode":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/isTextNode.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/copyProperties.js":[function(require,module,exports){
+(function (process){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule copyProperties
+ */
+
+/**
+ * Copy properties from one or more objects (up to 5) into the first object.
+ * This is a shallow copy. It mutates the first object and also returns it.
+ *
+ * NOTE: `arguments` has a very significant performance penalty, which is why
+ * we don't support unlimited arguments.
+ */
+function copyProperties(obj, a, b, c, d, e, f) {
+  obj = obj || {};
+
+  if ("production" !== process.env.NODE_ENV) {
+    if (f) {
+      throw new Error('Too many arguments passed to copyProperties');
+    }
+  }
+
+  var args = [a, b, c, d, e];
+  var ii = 0, v;
+  while (args[ii]) {
+    v = args[ii++];
+    for (var k in v) {
+      obj[k] = v[k];
+    }
+
+    // IE ignores toString in object iteration.. See:
+    // webreflection.blogspot.com/2007/07/quick-fix-internet-explorer-and.html
+    if (v.hasOwnProperty && v.hasOwnProperty('toString') &&
+        (typeof v.toString != 'undefined') && (obj.toString !== v.toString)) {
+      obj.toString = v.toString;
+    }
+  }
+
+  return obj;
+}
+
+module.exports = copyProperties;
+
+// deprecation notice
+console.warn(
+  'react/lib/copyProperties has been deprecated and will be removed in the ' +
+  'next version of React. All uses can be replaced with ' +
+  'Object.assign(obj, a, b, ...) or _.extend(obj, a, b, ...).'
+);
+
+}).call(this,require('_process'))
+},{"_process":"/Users/kenwheeler/Projects/app-template/node_modules/browserify/node_modules/process/browser.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/createArrayFrom.js":[function(require,module,exports){
 /**
  * Copyright 2013-2014, Facebook, Inc.
  * All rights reserved.
@@ -23449,7 +23920,43 @@ function memoizeStringOnly(callback) {
 
 module.exports = memoizeStringOnly;
 
-},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/monitorCodeUse.js":[function(require,module,exports){
+},{}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/merge.js":[function(require,module,exports){
+/**
+ * Copyright 2013-2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @providesModule merge
+ */
+
+"use strict";
+
+var assign = require("./Object.assign");
+
+/**
+ * Shallow merges two structures into a return value, without mutating either.
+ *
+ * @param {?object} one Optional object with properties to merge from.
+ * @param {?object} two Optional object with properties to merge from.
+ * @return {object} The shallow extension of one by two.
+ */
+var merge = function(one, two) {
+  return assign({}, one, two);
+};
+
+module.exports = merge;
+
+// deprecation notice
+console.warn(
+  'react/lib/merge has been deprecated and will be removed in the ' +
+  'next version of React. All uses can be replaced with ' +
+  'Object.assign({}, a, b) or _.extend({}, a, b).'
+);
+
+},{"./Object.assign":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/Object.assign.js"}],"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/monitorCodeUse.js":[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014, Facebook, Inc.
@@ -24045,20 +24552,21 @@ module.exports = require('./lib/React');
 },{"./lib/React":"/Users/kenwheeler/Projects/app-template/node_modules/react/lib/React.js"}],"/Users/kenwheeler/Projects/app-template/routes.js":[function(require,module,exports){
 var React = require('react');
 var Router = require('react-router');
-var App = require('./components/App');
-var PostsIndex = require('./components/posts/PostsIndex');
 var Routes = Router.Routes;
 var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
 
-module.exports = (
+var AppRoutes = (
   React.createElement(Routes, {location: "history"}, 
-    React.createElement(Route, {name: "app", handler: App}, 
-      React.createElement(Route, {name: "posts", path: "/", handler: PostsIndex})
+    React.createElement(Route, {name: "app", handler: require('./components/App')}, 
+      React.createElement(Route, {name: "home", path: "/", handler: require('./components/home/HomeIndex')}), 
+      React.createElement(Route, {name: "posts", path: "/posts", handler: require('./components/posts/PostsIndex')}), 
+      React.createElement(Route, {name: "account", path: "/account", handler: require('./components/account/AccountIndex')})
     )
   )
 );
-},{"./components/App":"/Users/kenwheeler/Projects/app-template/components/App.js","./components/posts/PostsIndex":"/Users/kenwheeler/Projects/app-template/components/posts/PostsIndex.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react-router":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/index.js"}],"/Users/kenwheeler/Projects/app-template/stores/UIStore.js":[function(require,module,exports){
+
+module.exports = AppRoutes;
+},{"./components/App":"/Users/kenwheeler/Projects/app-template/components/App.js","./components/account/AccountIndex":"/Users/kenwheeler/Projects/app-template/components/account/AccountIndex.js","./components/home/HomeIndex":"/Users/kenwheeler/Projects/app-template/components/home/HomeIndex.js","./components/posts/PostsIndex":"/Users/kenwheeler/Projects/app-template/components/posts/PostsIndex.js","react":"/Users/kenwheeler/Projects/app-template/node_modules/react/react.js","react-router":"/Users/kenwheeler/Projects/app-template/node_modules/react-router/modules/index.js"}],"/Users/kenwheeler/Projects/app-template/stores/UIStore.js":[function(require,module,exports){
 var McFly = require('../flux/McFly');
 
 var _navigationActive = false;
